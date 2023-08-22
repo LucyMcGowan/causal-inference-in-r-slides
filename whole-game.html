@@ -402,12 +402,6 @@ Lucy D’Agostino McGowan
 </div>
 
 </section>
-<section class="slide level2">
-
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"setup.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
 <section id="section" class="slide level2" data-background-color="#23373B">
 <h2></h2>
 <ol type="1">
@@ -538,9 +532,9 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="the-data-1" class="slide level2">
 <h2>The Data</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(causalworkshop)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">skim</span>(net_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(causalworkshop)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">skim</span>(net_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="smaller">
 <div class="cell" data-layout-align="center">
@@ -585,7 +579,7 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="section-5" class="slide level2">
 <h2></h2>
 
-<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-6-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-5-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
 <section id="in-words" class="slide level2">
 <h2>In words</h2>
 <div class="small">
@@ -604,20 +598,20 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="section-7" class="slide level2">
 <h2></h2>
 
-<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-7-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-6-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
 <section class="slide level2">
 
 
-<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-8-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-7-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
 <section id="multivariable-regression-whats-the-association" class="slide level2">
 <h2>Multivariable regression: what’s the association?</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="|1-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">lm</span>( </span>
-<span id="cb5-2"><a href="#cb5-2"></a>  malaria_risk <span class="sc">~</span> net <span class="sc">+</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature, </span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="at">data =</span> net_data </span>
-<span id="cb5-4"><a href="#cb5-4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="|1-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">lm</span>( </span>
+<span id="cb4-2"><a href="#cb4-2"></a>  malaria_risk <span class="sc">~</span> net <span class="sc">+</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature, </span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="at">data =</span> net_data </span>
+<span id="cb4-4"><a href="#cb4-4"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -642,14 +636,14 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="fit-propensity-score-model" class="slide level2">
 <h2>Fit propensity score model</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="|1-2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>propensity_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  net <span class="sc">~</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature,</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">data =</span> net_data,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
-<span id="cb7-5"><a href="#cb7-5"></a>)</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># the first six propensity scores</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">head</span>(<span class="fu">predict</span>(propensity_model, <span class="at">type =</span> <span class="st">"response"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="|1-2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>propensity_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  net <span class="sc">~</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="at">data =</span> net_data,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
+<span id="cb6-5"><a href="#cb6-5"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># the first six propensity scores</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="fu">head</span>(<span class="fu">predict</span>(propensity_model, <span class="at">type =</span> <span class="st">"response"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     1      2      3      4      5      6 
 0.2464 0.2178 0.3230 0.2307 0.2789 0.3060 </code></pre>
@@ -659,16 +653,16 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="calculate-inverse-probability-weights" class="slide level2">
 <h2>Calculate inverse probability weights</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="|4,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">library</span>(propensity)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>net_data_wts <span class="ot">&lt;-</span> propensity_model <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> net_data, <span class="at">type.predict =</span> <span class="st">"response"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>  <span class="co"># .fitted is the value predicted by the model</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>  <span class="co"># for a given observation</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a>  <span class="fu">mutate</span>(<span class="at">wts =</span> <span class="fu">wt_ate</span>(.fitted, net))</span>
-<span id="cb9-8"><a href="#cb9-8"></a></span>
-<span id="cb9-9"><a href="#cb9-9"></a>net_data_wts <span class="sc">|&gt;</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a>  <span class="fu">select</span>(net, .fitted, wts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="|4,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">library</span>(propensity)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>net_data_wts <span class="ot">&lt;-</span> propensity_model <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> net_data, <span class="at">type.predict =</span> <span class="st">"response"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="co"># .fitted is the value predicted by the model</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>  <span class="co"># for a given observation</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">mutate</span>(<span class="at">wts =</span> <span class="fu">wt_ate</span>(.fitted, net))</span>
+<span id="cb8-8"><a href="#cb8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9"></a>net_data_wts <span class="sc">|&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>  <span class="fu">select</span>(net, .fitted, wts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,752 × 3
    net   .fitted   wts
@@ -694,19 +688,19 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="whats-the-distribution-of-weights" class="slide level2">
 <h2>What’s the distribution of weights?</h2>
 
-<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-12-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-11-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
 <section id="what-are-the-weights-doing-to-the-sample" class="slide level2">
 <h2>What are the weights doing to the sample?</h2>
+
+<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-12-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<section class="slide level2">
+
 
 <img data-src="whole-game_files/figure-revealjs/unnamed-chunk-13-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
 <section class="slide level2">
 
 
 <img data-src="whole-game_files/figure-revealjs/unnamed-chunk-14-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
-<section class="slide level2">
-
-
-<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
 <section id="section-11" class="slide level2 center" data-background-color="#23373B">
 <h2></h2>
 <h3 id="estimate-the-causal-effects"><strong>estimate the causal effects</strong></h3>
@@ -714,16 +708,16 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="estimate-causal-effect-with-ipw" class="slide level2">
 <h2>Estimate causal effect with IPW</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="|1-2,3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>ipw_estimate <span class="ot">&lt;-</span> net_data_wts <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> _, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|1-2,3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>ipw_estimate <span class="ot">&lt;-</span> net_data_wts <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> _, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="estimate-causal-effect-with-ipw-1" class="slide level2">
 <h2>Estimate causal effect with IPW</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>ipw_estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>ipw_estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   term    estimate std.error statistic  p.value
@@ -739,24 +733,24 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <h2>Let’s fix our confidence intervals with robust SEs!</h2>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14" data-code-line-numbers="|3-4,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># also see robustbase, survey, gee, and others</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">library</span>(estimatr)</span>
-<span id="cb14-3"><a href="#cb14-3"></a>ipw_model_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>( </span>
-<span id="cb14-4"><a href="#cb14-4"></a>  malaria_risk <span class="sc">~</span> net,</span>
-<span id="cb14-5"><a href="#cb14-5"></a>  <span class="at">data =</span> net_data_wts, </span>
-<span id="cb14-6"><a href="#cb14-6"></a>  <span class="at">weights =</span> wts </span>
-<span id="cb14-7"><a href="#cb14-7"></a>) </span>
-<span id="cb14-8"><a href="#cb14-8"></a></span>
-<span id="cb14-9"><a href="#cb14-9"></a>ipw_estimate_robust <span class="ot">&lt;-</span> ipw_model_robust <span class="sc">|&gt;</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="|3-4,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># also see robustbase, survey, gee, and others</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">library</span>(estimatr)</span>
+<span id="cb13-3"><a href="#cb13-3"></a>ipw_model_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>( </span>
+<span id="cb13-4"><a href="#cb13-4"></a>  malaria_risk <span class="sc">~</span> net,</span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="at">data =</span> net_data_wts, </span>
+<span id="cb13-6"><a href="#cb13-6"></a>  <span class="at">weights =</span> wts </span>
+<span id="cb13-7"><a href="#cb13-7"></a>) </span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a>ipw_estimate_robust <span class="ot">&lt;-</span> ipw_model_robust <span class="sc">|&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="lets-fix-our-confidence-intervals-with-robust-ses-1" class="slide level2">
 <h2>Let’s fix our confidence intervals with robust SEs!</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">as_tibble</span>(ipw_estimate_robust)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">as_tibble</span>(ipw_estimate_robust)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 9
   term    estimate std.error statistic  p.value
@@ -772,60 +766,60 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <h2>Let’s fix our confidence intervals with the bootstrap!</h2>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># fit ipw model for a single bootstrap sample</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>fit_ipw_not_quite_rightly <span class="ot">&lt;-</span> <span class="cf">function</span>(split, ...) { </span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="co"># get bootstrapped data sample with `rsample::analysis()`</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>  .df <span class="ot">&lt;-</span> <span class="fu">analysis</span>(split)</span>
-<span id="cb17-5"><a href="#cb17-5"></a>  </span>
-<span id="cb17-6"><a href="#cb17-6"></a>  <span class="co"># fit ipw model</span></span>
-<span id="cb17-7"><a href="#cb17-7"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> .df, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>    <span class="fu">tidy</span>()</span>
-<span id="cb17-9"><a href="#cb17-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># fit ipw model for a single bootstrap sample</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>fit_ipw_not_quite_rightly <span class="ot">&lt;-</span> <span class="cf">function</span>(split, ...) { </span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="co"># get bootstrapped data sample with `rsample::analysis()`</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  .df <span class="ot">&lt;-</span> <span class="fu">analysis</span>(split)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>  </span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="co"># fit ipw model</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> .df, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>    <span class="fu">tidy</span>()</span>
+<span id="cb16-9"><a href="#cb16-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="section-12" class="slide level2 small">
 <h2></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>fit_ipw <span class="ot">&lt;-</span> <span class="cf">function</span>(split, ...) {</span>
-<span id="cb18-2"><a href="#cb18-2"></a>  .df <span class="ot">&lt;-</span> <span class="fu">analysis</span>(split)</span>
-<span id="cb18-3"><a href="#cb18-3"></a>  </span>
-<span id="cb18-4"><a href="#cb18-4"></a>  <span class="co"># fit propensity score model</span></span>
-<span id="cb18-5"><a href="#cb18-5"></a>  propensity_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb18-6"><a href="#cb18-6"></a>    net <span class="sc">~</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature, </span>
-<span id="cb18-7"><a href="#cb18-7"></a>    <span class="at">family =</span> <span class="fu">binomial</span>(), </span>
-<span id="cb18-8"><a href="#cb18-8"></a>    <span class="at">data =</span> .df</span>
-<span id="cb18-9"><a href="#cb18-9"></a>  )</span>
-<span id="cb18-10"><a href="#cb18-10"></a>  </span>
-<span id="cb18-11"><a href="#cb18-11"></a>  <span class="co"># calculate inverse probability weights</span></span>
-<span id="cb18-12"><a href="#cb18-12"></a>  .df <span class="ot">&lt;-</span> propensity_model <span class="sc">|&gt;</span></span>
-<span id="cb18-13"><a href="#cb18-13"></a>    <span class="fu">augment</span>(<span class="at">type.predict =</span> <span class="st">"response"</span>, <span class="at">data =</span> .df) <span class="sc">|&gt;</span></span>
-<span id="cb18-14"><a href="#cb18-14"></a>    <span class="fu">mutate</span>(<span class="at">wts =</span> <span class="fu">wt_ate</span>(.fitted, net))</span>
-<span id="cb18-15"><a href="#cb18-15"></a>  </span>
-<span id="cb18-16"><a href="#cb18-16"></a>  <span class="co"># fit correctly bootstrapped ipw model</span></span>
-<span id="cb18-17"><a href="#cb18-17"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> .df, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
-<span id="cb18-18"><a href="#cb18-18"></a>    <span class="fu">tidy</span>()</span>
-<span id="cb18-19"><a href="#cb18-19"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>fit_ipw <span class="ot">&lt;-</span> <span class="cf">function</span>(split, ...) {</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  .df <span class="ot">&lt;-</span> <span class="fu">analysis</span>(split)</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  </span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="co"># fit propensity score model</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>  propensity_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb17-6"><a href="#cb17-6"></a>    net <span class="sc">~</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature, </span>
+<span id="cb17-7"><a href="#cb17-7"></a>    <span class="at">family =</span> <span class="fu">binomial</span>(), </span>
+<span id="cb17-8"><a href="#cb17-8"></a>    <span class="at">data =</span> .df</span>
+<span id="cb17-9"><a href="#cb17-9"></a>  )</span>
+<span id="cb17-10"><a href="#cb17-10"></a>  </span>
+<span id="cb17-11"><a href="#cb17-11"></a>  <span class="co"># calculate inverse probability weights</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a>  .df <span class="ot">&lt;-</span> propensity_model <span class="sc">|&gt;</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a>    <span class="fu">augment</span>(<span class="at">type.predict =</span> <span class="st">"response"</span>, <span class="at">data =</span> .df) <span class="sc">|&gt;</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a>    <span class="fu">mutate</span>(<span class="at">wts =</span> <span class="fu">wt_ate</span>(.fitted, net))</span>
+<span id="cb17-15"><a href="#cb17-15"></a>  </span>
+<span id="cb17-16"><a href="#cb17-16"></a>  <span class="co"># fit correctly bootstrapped ipw model</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> .df, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a>    <span class="fu">tidy</span>()</span>
+<span id="cb17-19"><a href="#cb17-19"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-rsample-to-bootstrap-our-causal-effect" class="slide level2">
 <h2>Using {rsample} to bootstrap our causal effect</h2>
 <div class="fragment">
 <div class="cell" data-layout-align="center" data-hash="whole-game_cache/revealjs/boot_cache_87409b70ee7a475f5c74ee1fb4e9d6ef">
-<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="|2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># fit ipw model to bootstrapped samples</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>ipw_results <span class="ot">&lt;-</span> <span class="fu">bootstraps</span>(net_data_wts, <span class="dv">1000</span>, <span class="at">apparent =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">mutate</span>(<span class="at">results =</span> <span class="fu">map</span>(splits, fit_ipw)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="|2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># fit ipw model to bootstrapped samples</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>ipw_results <span class="ot">&lt;-</span> <span class="fu">bootstraps</span>(net_data_wts, <span class="dv">1000</span>, <span class="at">apparent =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">mutate</span>(<span class="at">results =</span> <span class="fu">map</span>(splits, fit_ipw)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="using-rsample-to-bootstrap-our-causal-effect-1" class="slide level2">
 <h2>Using {rsample} to bootstrap our causal effect</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># get t-statistic-based CIs</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a>boot_estimate <span class="ot">&lt;-</span> <span class="fu">int_t</span>(ipw_results, results) <span class="sc">|&gt;</span> </span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span>
-<span id="cb20-4"><a href="#cb20-4"></a></span>
-<span id="cb20-5"><a href="#cb20-5"></a>boot_estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># get t-statistic-based CIs</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>boot_estimate <span class="ot">&lt;-</span> <span class="fu">int_t</span>(ipw_results, results) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4"></a></span>
+<span id="cb19-5"><a href="#cb19-5"></a>boot_estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
@@ -839,7 +833,7 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 </div></section><section id="section-13" class="slide level2 center">
 <h2></h2>
 
-<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-24-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-23-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
 <section id="section-14" class="slide level2 center" data-background-color="#23373B">
 <h2></h2>
 <h3 id="our-causal-effect-estimate--13.4-95-ci--12.5--11.6"><em>Our causal effect estimate: <strong>-13.4 (95% CI -12.5, -11.6)</strong></em></h3>
@@ -851,14 +845,14 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="sensitivity-analysis-1" class="slide level2">
 <h2>Sensitivity Analysis</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(tipr)</span>
-<span id="cb22-2"><a href="#cb22-2"></a>tipping_points <span class="ot">&lt;-</span> <span class="fu">tip_coef</span>(boot_estimate<span class="sc">$</span>.upper, <span class="at">exposure_confounder_effect =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">library</span>(tipr)</span>
+<span id="cb21-2"><a href="#cb21-2"></a>tipping_points <span class="ot">&lt;-</span> <span class="fu">tip_coef</span>(boot_estimate<span class="sc">$</span>.upper, <span class="at">exposure_confounder_effect =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="section-16" class="slide level2">
 <h2></h2>
 
-<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-26-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-25-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
 <section id="more-specific-sensitivity-analysis" class="slide level2">
 <h2>More specific sensitivity analysis</h2>
 <ul>
@@ -871,16 +865,16 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <h2>More specific sensitivity analysis</h2>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>adjusted_estimates <span class="ot">&lt;-</span> boot_estimate <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">select</span>(.estimate, .lower, .upper) <span class="sc">|&gt;</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">adjust_coef_with_binary</span>(</span>
-<span id="cb23-5"><a href="#cb23-5"></a>    <span class="at">exposed_confounder_prev =</span> <span class="fl">0.26</span>,</span>
-<span id="cb23-6"><a href="#cb23-6"></a>    <span class="at">unexposed_confounder_prev =</span> <span class="fl">0.05</span>,</span>
-<span id="cb23-7"><a href="#cb23-7"></a>    <span class="at">confounder_outcome_effect =</span> <span class="sc">-</span><span class="dv">10</span></span>
-<span id="cb23-8"><a href="#cb23-8"></a>  )</span>
-<span id="cb23-9"><a href="#cb23-9"></a></span>
-<span id="cb23-10"><a href="#cb23-10"></a>adjusted_estimates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>adjusted_estimates <span class="ot">&lt;-</span> boot_estimate <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">select</span>(.estimate, .lower, .upper) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">adjust_coef_with_binary</span>(</span>
+<span id="cb22-5"><a href="#cb22-5"></a>    <span class="at">exposed_confounder_prev =</span> <span class="fl">0.26</span>,</span>
+<span id="cb22-6"><a href="#cb22-6"></a>    <span class="at">unexposed_confounder_prev =</span> <span class="fl">0.05</span>,</span>
+<span id="cb22-7"><a href="#cb22-7"></a>    <span class="at">confounder_outcome_effect =</span> <span class="sc">-</span><span class="dv">10</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a>  )</span>
+<span id="cb22-9"><a href="#cb22-9"></a></span>
+<span id="cb22-10"><a href="#cb22-10"></a>adjusted_estimates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   effect_adjusted effect_observed
@@ -900,7 +894,7 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="section-17" class="slide level2">
 <h2></h2>
 
-<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-28-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="whole-game_files/figure-revealjs/unnamed-chunk-27-1.png" style="width:80.0%" class="r-stretch quarto-figure-center"></section>
 <section id="truth" class="slide level2">
 <h2>Truth</h2>
 <ul>

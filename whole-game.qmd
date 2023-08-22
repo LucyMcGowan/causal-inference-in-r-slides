@@ -5,15 +5,14 @@ format: kakashi-revealjs
 footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
 ---
 
-```{r}
-source(here::here("setup.R"))
-```
 
 ##  {background-color="#23373B"}
 
 ```{r}
 #| label: setup
 #| include: false
+source(here::here("setup.R"))
+
 options(
   tibble.max_extra_cols = 6, 
   tibble.width = 60
