@@ -34,7 +34,7 @@ set.seed(1234)
 3.  Model assumptions (e.g. propensity score)
 4.  Analyze propensities (diagnostics)
 5.  Estimate causal effects (e.g. IPW)
-6.  Sensitivity analysis (more later!)
+6.  Sensitivity analysis (tipping points)
 
 ##  {.center background-color="#23373B"}
 
@@ -157,13 +157,14 @@ library(skimr)
 skim(net_data)
 ```
 
-::: smaller
+::: small
 ```{r}
 #| echo: false
 library(causalworkshop)
 library(skimr)
 skimmed <- as.data.frame(skim(net_data, where(is.logical)))
-skimmed[c(2, 5, 6)]
+skimmed[c(2, 5, 6)] |>
+  gt::gt()
 ```
 
 :::
@@ -176,7 +177,8 @@ skimmed[c(2, 5, 6)]
 #| echo: false
 #| eval: true
 skimmed <- as.data.frame(skim(net_data, where(~!is.logical(.x))))
-skimmed[c(2, 5, 6, 12)]
+skimmed[c(2, 5, 6, 12)] |>
+  gt::gt()
 ```
 :::
 
@@ -739,6 +741,17 @@ mosquito_dag_full |>
 
 * The unmeasured confounder is in `net_data_full` as genetic_resistance. 
 * If we recalculate the IPW estimate of the average treatment effect of nets on malaria risk, we get -10.2 (95% CI -11.2, -9.4), much closer to the actual answer of -10.
+
+## {.center background-color="#23373B"}
+
+::: small
+1. Specified a causal question (for the average treatment effect)
+1. Drew our assumptions using a causal diagram (using DAGs)
+1. Modeled our assumptions (using propensity score weighting)
+1. Diagnosed our models (by checking confounder balance after weighting)
+1. Estimated the causal effect (using inverse probability weighting)
+1. Conducted sensitivity analysis on the effect estimate (using tipping point analysis)
+:::
 
 ##  {.center background-color="#23373B"}
 

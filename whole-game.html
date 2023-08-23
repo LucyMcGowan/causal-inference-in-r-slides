@@ -410,7 +410,7 @@ Lucy D’Agostino McGowan
 <li class="fragment">Model assumptions (e.g.&nbsp;propensity score)</li>
 <li class="fragment">Analyze propensities (diagnostics)</li>
 <li class="fragment">Estimate causal effects (e.g.&nbsp;IPW)</li>
-<li class="fragment">Sensitivity analysis (more later!)</li>
+<li class="fragment">Sensitivity analysis (tipping points)</li>
 </ol>
 </section>
 <section id="section-1" class="slide level2 center" data-background-color="#23373B">
@@ -536,37 +536,925 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(skimr)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">skim</span>(net_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="smaller">
+<div class="small">
 <div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>  skim_variable logical.mean       logical.count
-1           net      0.25913 FAL: 1298, TRU: 454
-2      eligible      0.02055  FAL: 1716, TRU: 36</code></pre>
+<div class="cell-output-display">
+<div id="pzveloiefp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#pzveloiefp .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pzveloiefp .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pzveloiefp .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pzveloiefp .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pzveloiefp .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pzveloiefp .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pzveloiefp .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pzveloiefp .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pzveloiefp .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#pzveloiefp .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pzveloiefp .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pzveloiefp .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pzveloiefp .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pzveloiefp .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzveloiefp .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#pzveloiefp .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#pzveloiefp .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzveloiefp .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#pzveloiefp .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzveloiefp .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pzveloiefp .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzveloiefp .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pzveloiefp .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzveloiefp .gt_left {
+  text-align: left;
+}
+
+#pzveloiefp .gt_center {
+  text-align: center;
+}
+
+#pzveloiefp .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pzveloiefp .gt_font_normal {
+  font-weight: normal;
+}
+
+#pzveloiefp .gt_font_bold {
+  font-weight: bold;
+}
+
+#pzveloiefp .gt_font_italic {
+  font-style: italic;
+}
+
+#pzveloiefp .gt_super {
+  font-size: 65%;
+}
+
+#pzveloiefp .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#pzveloiefp .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#pzveloiefp .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#pzveloiefp .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#pzveloiefp .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#pzveloiefp .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#pzveloiefp .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th id="skim_variable" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">skim_variable</th>
+<th id="logical.mean" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">logical.mean</th>
+<th id="logical.count" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">logical.count</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="skim_variable">net</td>
+<td class="gt_row gt_right" headers="logical.mean">0.25913</td>
+<td class="gt_row gt_left" headers="logical.count">FAL: 1298, TRU: 454</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="skim_variable">eligible</td>
+<td class="gt_row gt_right" headers="logical.mean">0.02055</td>
+<td class="gt_row gt_left" headers="logical.count">FAL: 1716, TRU: 36</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </div>
 </div>
 <div class="fragment">
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>           skim_variable numeric.mean numeric.sd
-1                     id     876.5000   505.9032
-2                net_num       0.2591     0.4383
-3           malaria_risk      39.6678    15.3716
-4                 income     897.7614   191.2374
-5                 health      50.2123    19.3482
-6              household       2.9680     1.4066
-7            temperature      23.9275     4.0959
-8 insecticide_resistance      50.0782    14.4438
-  numeric.hist
-1        ▇▇▇▇▇
-2        ▇▁▁▁▃
-3        ▃▇▅▂▁
-4        ▁▅▇▅▁
-5        ▂▆▇▅▁
-6        ▇▇▂▁▁
-7        ▃▇▇▇▃
-8        ▁▅▇▃▁</code></pre>
+<div class="cell-output-display">
+<div id="dbgvzfontn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#dbgvzfontn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dbgvzfontn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dbgvzfontn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dbgvzfontn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dbgvzfontn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dbgvzfontn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dbgvzfontn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dbgvzfontn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dbgvzfontn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#dbgvzfontn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dbgvzfontn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dbgvzfontn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dbgvzfontn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dbgvzfontn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbgvzfontn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dbgvzfontn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dbgvzfontn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbgvzfontn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dbgvzfontn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbgvzfontn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dbgvzfontn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbgvzfontn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dbgvzfontn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dbgvzfontn .gt_left {
+  text-align: left;
+}
+
+#dbgvzfontn .gt_center {
+  text-align: center;
+}
+
+#dbgvzfontn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dbgvzfontn .gt_font_normal {
+  font-weight: normal;
+}
+
+#dbgvzfontn .gt_font_bold {
+  font-weight: bold;
+}
+
+#dbgvzfontn .gt_font_italic {
+  font-style: italic;
+}
+
+#dbgvzfontn .gt_super {
+  font-size: 65%;
+}
+
+#dbgvzfontn .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#dbgvzfontn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dbgvzfontn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#dbgvzfontn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#dbgvzfontn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#dbgvzfontn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#dbgvzfontn .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th id="skim_variable" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">skim_variable</th>
+<th id="numeric.mean" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">numeric.mean</th>
+<th id="numeric.sd" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">numeric.sd</th>
+<th id="numeric.hist" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">numeric.hist</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="skim_variable">id</td>
+<td class="gt_row gt_right" headers="numeric.mean">876.5000</td>
+<td class="gt_row gt_right" headers="numeric.sd">505.9032</td>
+<td class="gt_row gt_left" headers="numeric.hist">▇▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="skim_variable">net_num</td>
+<td class="gt_row gt_right" headers="numeric.mean">0.2591</td>
+<td class="gt_row gt_right" headers="numeric.sd">0.4383</td>
+<td class="gt_row gt_left" headers="numeric.hist">▇▁▁▁▃</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="skim_variable">malaria_risk</td>
+<td class="gt_row gt_right" headers="numeric.mean">39.6678</td>
+<td class="gt_row gt_right" headers="numeric.sd">15.3716</td>
+<td class="gt_row gt_left" headers="numeric.hist">▃▇▅▂▁</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="skim_variable">income</td>
+<td class="gt_row gt_right" headers="numeric.mean">897.7614</td>
+<td class="gt_row gt_right" headers="numeric.sd">191.2374</td>
+<td class="gt_row gt_left" headers="numeric.hist">▁▅▇▅▁</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="skim_variable">health</td>
+<td class="gt_row gt_right" headers="numeric.mean">50.2123</td>
+<td class="gt_row gt_right" headers="numeric.sd">19.3482</td>
+<td class="gt_row gt_left" headers="numeric.hist">▂▆▇▅▁</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="skim_variable">household</td>
+<td class="gt_row gt_right" headers="numeric.mean">2.9680</td>
+<td class="gt_row gt_right" headers="numeric.sd">1.4066</td>
+<td class="gt_row gt_left" headers="numeric.hist">▇▇▂▁▁</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="skim_variable">temperature</td>
+<td class="gt_row gt_right" headers="numeric.mean">23.9275</td>
+<td class="gt_row gt_right" headers="numeric.sd">4.0959</td>
+<td class="gt_row gt_left" headers="numeric.hist">▃▇▇▇▃</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="skim_variable">insecticide_resistance</td>
+<td class="gt_row gt_right" headers="numeric.mean">50.0782</td>
+<td class="gt_row gt_right" headers="numeric.sd">14.4438</td>
+<td class="gt_row gt_left" headers="numeric.hist">▁▅▇▃▁</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </div>
 </div>
@@ -606,12 +1494,12 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="multivariable-regression-whats-the-association" class="slide level2">
 <h2>Multivariable regression: what’s the association?</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="|1-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">lm</span>( </span>
-<span id="cb4-2"><a href="#cb4-2"></a>  malaria_risk <span class="sc">~</span> net <span class="sc">+</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature, </span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="at">data =</span> net_data </span>
-<span id="cb4-4"><a href="#cb4-4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2" data-code-line-numbers="|1-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">lm</span>( </span>
+<span id="cb2-2"><a href="#cb2-2"></a>  malaria_risk <span class="sc">~</span> net <span class="sc">+</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature, </span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="at">data =</span> net_data </span>
+<span id="cb2-4"><a href="#cb2-4"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -636,14 +1524,14 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="fit-propensity-score-model" class="slide level2">
 <h2>Fit propensity score model</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="|1-2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>propensity_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb6-2"><a href="#cb6-2"></a>  net <span class="sc">~</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature,</span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="at">data =</span> net_data,</span>
-<span id="cb6-4"><a href="#cb6-4"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
-<span id="cb6-5"><a href="#cb6-5"></a>)</span>
-<span id="cb6-6"><a href="#cb6-6"></a></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># the first six propensity scores</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="fu">head</span>(<span class="fu">predict</span>(propensity_model, <span class="at">type =</span> <span class="st">"response"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="|1-2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>propensity_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  net <span class="sc">~</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="at">data =</span> net_data,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
+<span id="cb4-5"><a href="#cb4-5"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># the first six propensity scores</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="fu">head</span>(<span class="fu">predict</span>(propensity_model, <span class="at">type =</span> <span class="st">"response"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     1      2      3      4      5      6 
 0.2464 0.2178 0.3230 0.2307 0.2789 0.3060 </code></pre>
@@ -653,16 +1541,16 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="calculate-inverse-probability-weights" class="slide level2">
 <h2>Calculate inverse probability weights</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="|4,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">library</span>(propensity)</span>
-<span id="cb8-3"><a href="#cb8-3"></a>net_data_wts <span class="ot">&lt;-</span> propensity_model <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> net_data, <span class="at">type.predict =</span> <span class="st">"response"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>  <span class="co"># .fitted is the value predicted by the model</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>  <span class="co"># for a given observation</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">mutate</span>(<span class="at">wts =</span> <span class="fu">wt_ate</span>(.fitted, net))</span>
-<span id="cb8-8"><a href="#cb8-8"></a></span>
-<span id="cb8-9"><a href="#cb8-9"></a>net_data_wts <span class="sc">|&gt;</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a>  <span class="fu">select</span>(net, .fitted, wts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="|4,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">library</span>(propensity)</span>
+<span id="cb6-3"><a href="#cb6-3"></a>net_data_wts <span class="ot">&lt;-</span> propensity_model <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> net_data, <span class="at">type.predict =</span> <span class="st">"response"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="co"># .fitted is the value predicted by the model</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="co"># for a given observation</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="fu">mutate</span>(<span class="at">wts =</span> <span class="fu">wt_ate</span>(.fitted, net))</span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a>net_data_wts <span class="sc">|&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">select</span>(net, .fitted, wts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,752 × 3
    net   .fitted   wts
@@ -708,16 +1596,16 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="estimate-causal-effect-with-ipw" class="slide level2">
 <h2>Estimate causal effect with IPW</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|1-2,3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>ipw_estimate <span class="ot">&lt;-</span> net_data_wts <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> _, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="|1-2,3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>ipw_estimate <span class="ot">&lt;-</span> net_data_wts <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> _, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="estimate-causal-effect-with-ipw-1" class="slide level2">
 <h2>Estimate causal effect with IPW</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>ipw_estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>ipw_estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   term    estimate std.error statistic  p.value
@@ -733,24 +1621,24 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <h2>Let’s fix our confidence intervals with robust SEs!</h2>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="|3-4,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># also see robustbase, survey, gee, and others</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">library</span>(estimatr)</span>
-<span id="cb13-3"><a href="#cb13-3"></a>ipw_model_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>( </span>
-<span id="cb13-4"><a href="#cb13-4"></a>  malaria_risk <span class="sc">~</span> net,</span>
-<span id="cb13-5"><a href="#cb13-5"></a>  <span class="at">data =</span> net_data_wts, </span>
-<span id="cb13-6"><a href="#cb13-6"></a>  <span class="at">weights =</span> wts </span>
-<span id="cb13-7"><a href="#cb13-7"></a>) </span>
-<span id="cb13-8"><a href="#cb13-8"></a></span>
-<span id="cb13-9"><a href="#cb13-9"></a>ipw_estimate_robust <span class="ot">&lt;-</span> ipw_model_robust <span class="sc">|&gt;</span></span>
-<span id="cb13-10"><a href="#cb13-10"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11" data-code-line-numbers="|3-4,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># also see robustbase, survey, gee, and others</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">library</span>(estimatr)</span>
+<span id="cb11-3"><a href="#cb11-3"></a>ipw_model_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>( </span>
+<span id="cb11-4"><a href="#cb11-4"></a>  malaria_risk <span class="sc">~</span> net,</span>
+<span id="cb11-5"><a href="#cb11-5"></a>  <span class="at">data =</span> net_data_wts, </span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="at">weights =</span> wts </span>
+<span id="cb11-7"><a href="#cb11-7"></a>) </span>
+<span id="cb11-8"><a href="#cb11-8"></a></span>
+<span id="cb11-9"><a href="#cb11-9"></a>ipw_estimate_robust <span class="ot">&lt;-</span> ipw_model_robust <span class="sc">|&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="lets-fix-our-confidence-intervals-with-robust-ses-1" class="slide level2">
 <h2>Let’s fix our confidence intervals with robust SEs!</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">as_tibble</span>(ipw_estimate_robust)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">as_tibble</span>(ipw_estimate_robust)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 9
   term    estimate std.error statistic  p.value
@@ -766,60 +1654,60 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <h2>Let’s fix our confidence intervals with the bootstrap!</h2>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># fit ipw model for a single bootstrap sample</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>fit_ipw_not_quite_rightly <span class="ot">&lt;-</span> <span class="cf">function</span>(split, ...) { </span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="co"># get bootstrapped data sample with `rsample::analysis()`</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a>  .df <span class="ot">&lt;-</span> <span class="fu">analysis</span>(split)</span>
-<span id="cb16-5"><a href="#cb16-5"></a>  </span>
-<span id="cb16-6"><a href="#cb16-6"></a>  <span class="co"># fit ipw model</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> .df, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
-<span id="cb16-8"><a href="#cb16-8"></a>    <span class="fu">tidy</span>()</span>
-<span id="cb16-9"><a href="#cb16-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># fit ipw model for a single bootstrap sample</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>fit_ipw_not_quite_rightly <span class="ot">&lt;-</span> <span class="cf">function</span>(split, ...) { </span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="co"># get bootstrapped data sample with `rsample::analysis()`</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>  .df <span class="ot">&lt;-</span> <span class="fu">analysis</span>(split)</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  </span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="co"># fit ipw model</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> .df, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>    <span class="fu">tidy</span>()</span>
+<span id="cb14-9"><a href="#cb14-9"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="section-12" class="slide level2 small">
 <h2></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>fit_ipw <span class="ot">&lt;-</span> <span class="cf">function</span>(split, ...) {</span>
-<span id="cb17-2"><a href="#cb17-2"></a>  .df <span class="ot">&lt;-</span> <span class="fu">analysis</span>(split)</span>
-<span id="cb17-3"><a href="#cb17-3"></a>  </span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="co"># fit propensity score model</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a>  propensity_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
-<span id="cb17-6"><a href="#cb17-6"></a>    net <span class="sc">~</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature, </span>
-<span id="cb17-7"><a href="#cb17-7"></a>    <span class="at">family =</span> <span class="fu">binomial</span>(), </span>
-<span id="cb17-8"><a href="#cb17-8"></a>    <span class="at">data =</span> .df</span>
-<span id="cb17-9"><a href="#cb17-9"></a>  )</span>
-<span id="cb17-10"><a href="#cb17-10"></a>  </span>
-<span id="cb17-11"><a href="#cb17-11"></a>  <span class="co"># calculate inverse probability weights</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a>  .df <span class="ot">&lt;-</span> propensity_model <span class="sc">|&gt;</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a>    <span class="fu">augment</span>(<span class="at">type.predict =</span> <span class="st">"response"</span>, <span class="at">data =</span> .df) <span class="sc">|&gt;</span></span>
-<span id="cb17-14"><a href="#cb17-14"></a>    <span class="fu">mutate</span>(<span class="at">wts =</span> <span class="fu">wt_ate</span>(.fitted, net))</span>
-<span id="cb17-15"><a href="#cb17-15"></a>  </span>
-<span id="cb17-16"><a href="#cb17-16"></a>  <span class="co"># fit correctly bootstrapped ipw model</span></span>
-<span id="cb17-17"><a href="#cb17-17"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> .df, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
-<span id="cb17-18"><a href="#cb17-18"></a>    <span class="fu">tidy</span>()</span>
-<span id="cb17-19"><a href="#cb17-19"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>fit_ipw <span class="ot">&lt;-</span> <span class="cf">function</span>(split, ...) {</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  .df <span class="ot">&lt;-</span> <span class="fu">analysis</span>(split)</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  </span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="co"># fit propensity score model</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>  propensity_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb15-6"><a href="#cb15-6"></a>    net <span class="sc">~</span> income <span class="sc">+</span> health <span class="sc">+</span> temperature, </span>
+<span id="cb15-7"><a href="#cb15-7"></a>    <span class="at">family =</span> <span class="fu">binomial</span>(), </span>
+<span id="cb15-8"><a href="#cb15-8"></a>    <span class="at">data =</span> .df</span>
+<span id="cb15-9"><a href="#cb15-9"></a>  )</span>
+<span id="cb15-10"><a href="#cb15-10"></a>  </span>
+<span id="cb15-11"><a href="#cb15-11"></a>  <span class="co"># calculate inverse probability weights</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a>  .df <span class="ot">&lt;-</span> propensity_model <span class="sc">|&gt;</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a>    <span class="fu">augment</span>(<span class="at">type.predict =</span> <span class="st">"response"</span>, <span class="at">data =</span> .df) <span class="sc">|&gt;</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a>    <span class="fu">mutate</span>(<span class="at">wts =</span> <span class="fu">wt_ate</span>(.fitted, net))</span>
+<span id="cb15-15"><a href="#cb15-15"></a>  </span>
+<span id="cb15-16"><a href="#cb15-16"></a>  <span class="co"># fit correctly bootstrapped ipw model</span></span>
+<span id="cb15-17"><a href="#cb15-17"></a>  <span class="fu">lm</span>(malaria_risk <span class="sc">~</span> net, <span class="at">data =</span> .df, <span class="at">weights =</span> wts) <span class="sc">|&gt;</span></span>
+<span id="cb15-18"><a href="#cb15-18"></a>    <span class="fu">tidy</span>()</span>
+<span id="cb15-19"><a href="#cb15-19"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-rsample-to-bootstrap-our-causal-effect" class="slide level2">
 <h2>Using {rsample} to bootstrap our causal effect</h2>
 <div class="fragment">
 <div class="cell" data-layout-align="center" data-hash="whole-game_cache/revealjs/boot_cache_87409b70ee7a475f5c74ee1fb4e9d6ef">
-<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="|2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># fit ipw model to bootstrapped samples</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>ipw_results <span class="ot">&lt;-</span> <span class="fu">bootstraps</span>(net_data_wts, <span class="dv">1000</span>, <span class="at">apparent =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">mutate</span>(<span class="at">results =</span> <span class="fu">map</span>(splits, fit_ipw)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="|2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># fit ipw model to bootstrapped samples</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>ipw_results <span class="ot">&lt;-</span> <span class="fu">bootstraps</span>(net_data_wts, <span class="dv">1000</span>, <span class="at">apparent =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">mutate</span>(<span class="at">results =</span> <span class="fu">map</span>(splits, fit_ipw)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="using-rsample-to-bootstrap-our-causal-effect-1" class="slide level2">
 <h2>Using {rsample} to bootstrap our causal effect</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># get t-statistic-based CIs</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>boot_estimate <span class="ot">&lt;-</span> <span class="fu">int_t</span>(ipw_results, results) <span class="sc">|&gt;</span> </span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4"></a></span>
-<span id="cb19-5"><a href="#cb19-5"></a>boot_estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="|2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># get t-statistic-based CIs</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>boot_estimate <span class="ot">&lt;-</span> <span class="fu">int_t</span>(ipw_results, results) <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"netTRUE"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a>boot_estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section>
@@ -845,8 +1733,8 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <section id="sensitivity-analysis-1" class="slide level2">
 <h2>Sensitivity Analysis</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">library</span>(tipr)</span>
-<span id="cb21-2"><a href="#cb21-2"></a>tipping_points <span class="ot">&lt;-</span> <span class="fu">tip_coef</span>(boot_estimate<span class="sc">$</span>.upper, <span class="at">exposure_confounder_effect =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">library</span>(tipr)</span>
+<span id="cb19-2"><a href="#cb19-2"></a>tipping_points <span class="ot">&lt;-</span> <span class="fu">tip_coef</span>(boot_estimate<span class="sc">$</span>.upper, <span class="at">exposure_confounder_effect =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="section-16" class="slide level2">
@@ -865,16 +1753,16 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 <h2>More specific sensitivity analysis</h2>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>adjusted_estimates <span class="ot">&lt;-</span> boot_estimate <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">select</span>(.estimate, .lower, .upper) <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">adjust_coef_with_binary</span>(</span>
-<span id="cb22-5"><a href="#cb22-5"></a>    <span class="at">exposed_confounder_prev =</span> <span class="fl">0.26</span>,</span>
-<span id="cb22-6"><a href="#cb22-6"></a>    <span class="at">unexposed_confounder_prev =</span> <span class="fl">0.05</span>,</span>
-<span id="cb22-7"><a href="#cb22-7"></a>    <span class="at">confounder_outcome_effect =</span> <span class="sc">-</span><span class="dv">10</span></span>
-<span id="cb22-8"><a href="#cb22-8"></a>  )</span>
-<span id="cb22-9"><a href="#cb22-9"></a></span>
-<span id="cb22-10"><a href="#cb22-10"></a>adjusted_estimates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>adjusted_estimates <span class="ot">&lt;-</span> boot_estimate <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">select</span>(.estimate, .lower, .upper) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">adjust_coef_with_binary</span>(</span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="at">exposed_confounder_prev =</span> <span class="fl">0.26</span>,</span>
+<span id="cb20-6"><a href="#cb20-6"></a>    <span class="at">unexposed_confounder_prev =</span> <span class="fl">0.05</span>,</span>
+<span id="cb20-7"><a href="#cb20-7"></a>    <span class="at">confounder_outcome_effect =</span> <span class="sc">-</span><span class="dv">10</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>  )</span>
+<span id="cb20-9"><a href="#cb20-9"></a></span>
+<span id="cb20-10"><a href="#cb20-10"></a>adjusted_estimates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   effect_adjusted effect_observed
@@ -903,6 +1791,19 @@ Photograph by Marie-Lan Nguyen / <a href="https://creativecommons.org/licenses/b
 </ul>
 </section>
 <section id="section-18" class="slide level2 center" data-background-color="#23373B">
+<h2></h2>
+<div class="small">
+<ol type="1">
+<li class="fragment">Specified a causal question (for the average treatment effect)</li>
+<li class="fragment">Drew our assumptions using a causal diagram (using DAGs)</li>
+<li class="fragment">Modeled our assumptions (using propensity score weighting)</li>
+<li class="fragment">Diagnosed our models (by checking confounder balance after weighting)</li>
+<li class="fragment">Estimated the causal effect (using inverse probability weighting)</li>
+<li class="fragment">Conducted sensitivity analysis on the effect estimate (using tipping point analysis)</li>
+</ol>
+</div>
+</section>
+<section id="section-19" class="slide level2 center" data-background-color="#23373B">
 <h2></h2>
 <h3 id="check-out-chapter-2-of-causal-inference-in-r">Check out <a href="https://www.r-causal.org/chapters/chapter-02">Chapter 2</a> of Causal Inference in R</h3>
 </section>
