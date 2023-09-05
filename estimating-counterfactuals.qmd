@@ -1,0 +1,157 @@
+---
+title: "Estimating counterfactuals"
+author: "Lucy D'Agostino McGowan"
+format: kakashi-revealjs
+footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
+---
+
+
+## Potential outcomes
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("setup.R"))
+
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+
+```
+
+* Prior to some "cause" occurring, the *potential outcomes* are all of the potential things that could occur depending on what you end up exposed to
+
+## Potential outcomes
+
+* Let's assume an exposure has two levels:
+    - $X=1$ if you are exposed
+    - $X=0$ if you are not exposed
+    
+## Potential outcomes
+
+* Under this simple scenario, there are two potential outcomes:
+    -   $Y(1)$ the potential outcome if you are exposed
+    -   $Y(0)$ the potential outcome if you are not exposed
+    
+## Potential outcomes
+
+* Only *one* of these potential outcomes will actually be realized
+* It is important to remember here that these exposures are defined at a particular instance in time, so *only one* can happen to any individual
+* In the case of a binary exposure, this leaves one potential outcome as *observable* and one *missing*
+
+## Potential outcomes
+
+* Our causal effect of interest is often some difference in potential outcomes $Y(1) - Y(0)$, averaged over a particular population
+
+## Counterfactuals
+
+* Early causal inference methods were often framed as missing data problems
+* We need to make certain assumptions about the *missing counterfactuals*, the value of the potential outcome corresponding to the exposure(s) that did not occur
+* We *wish* we could observe the conterfactual outcome that would have occurred in an alternate universe
+
+## Counterfactuals
+
+* To do this, we attempt to control for all factors that are related to an exposure and outcome such that we can *construct* (or estimate) such a counterfactual outcome.
+
+## Ice-T and Spike
+
+:::: columns
+
+::: column
+### **Split Decision: Life Stories**
+
+Award-winning actor, rapper, and producer Ice-T unveils a compelling memoir of his early life robbing jewelry stores until he found fame and fortune---while a handful of bad choices sent his former crime partner down an incredibly different path.
+:::
+
+::: column
+::: smaller
+![Vicky, CC BY 2.0 <https://creativecommons.org/licenses/by/2.0>, via Wikimedia Commons](images/ice-t.jpg){width="70%"}
+:::
+:::
+::::
+
+## Ice-T and Spike
+
+::: {#tbl-causal-map layout-ncol=1}
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  A{Ice-T} --> |observed| B(Abandons criminal life)
+  A -.-> |missing counterfactual| C(Does one more heist)
+  C -.-> D[35 years in prison]
+  B --> E[Fame & Fortune]
+  
+  classDef grey fill:#ddd
+  class D,C grey
+```
+
+```{mermaid}
+%%| echo: false
+flowchart LR
+  A{Spike} -.-> |missing counterfactual| B(Abandons criminal life)
+  A --> |observed| C(Does one more heist)
+  C --> D[35 years in prison]
+  B -.-> E[Fame & Fortune]
+  classDef grey fill:#ddd
+  class E,B grey
+```
+
+Ice-T and Spike Causal Map
+:::
+
+## Ice-T and Spike
+
+* What would need to be true for us to draw a causal conclusion?
+* Can we really conclude that Spike's life would have turned out exactly like Ice-T's if he had made the exact same choices as Ice-T?
+
+
+## In practice
+
+::: small
+* We could conduct an experiment where we *randomize* many individuals to leave criminal like (or not) and see how this impacts their outcomes *on average* 
+* This randomized trial seems to present some ethical issues, perhaps we need to look to *observational* studies to help answer this question
+* We must rely on statistical techniques to help construct these unobservable counterfactuals
+:::
+
+## Assumptions
+
+* Under certain assumptions, we can leverage data from *individuals exposed to different inputs* to compare the average differences in their observed outcomes
+
+## {background-color="#23373B"}
+
+
+1. **Consistency**
+2. **Well defined exposure**
+3. **No interference**
+4. **Exchangeability**
+5. **Positivity**
+
+
+## Consistency
+
+* We assume that the causal question you claim you are answering is consistent with the one you are *actually* answering with your analysis.
+
+## Well defined exposure
+
+* We assume that for each value of the exposure, there is no difference between subjects in the delivery of that exposure
+* Put another way, multiple versions of the treatment do not exist
+
+## No interference
+
+* We assume that the outcome (technically all *potential* outcomes, regardless of whether they are observed) for any subject does not depend on another subject's exposure
+
+## Exchangeability
+
+* We assume that within levels of relevant variables (confounders), exposed and unexposed subjects have an equal likelihood of experiencing any outcome prior to exposure
+* i.e. the exposed and unexposed subjects are exchangeable
+* This assumption is sometimes referred to as **no unmeasured confounding**.
+
+## Positivity
+
+* We assume that within each level and combination of the study variables used to achieve exchangeability, there are exposed and unexposed subjects. 
+* Said differently, each individual has some chance of experiencing every available exposure level.
+* Sometimes this is referred to as the **probabilistic** assumption.
+
+
