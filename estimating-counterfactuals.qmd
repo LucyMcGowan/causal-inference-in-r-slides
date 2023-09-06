@@ -110,7 +110,7 @@ Ice-T and Spike Causal Map
 ## In practice
 
 ::: small
-* We could conduct an experiment where we *randomize* many individuals to leave criminal like (or not) and see how this impacts their outcomes *on average* 
+* We could conduct an experiment where we *randomize* many individuals to leave criminal life (or not) and see how this impacts their outcomes *on average* 
 * This randomized trial seems to present some ethical issues, perhaps we need to look to *observational* studies to help answer this question
 * We must rely on statistical techniques to help construct these unobservable counterfactuals
 :::
