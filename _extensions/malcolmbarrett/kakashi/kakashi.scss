@@ -142,16 +142,30 @@ img {
 }
 
 ul {
-  font-size: 125%;
+  font-size: 150%;
   list-style-type: none;
   text-align: left;
   font-weight: 500;
   padding-top: 40px;
 }
 
+li {
+  font-size: inherit;
+}
+
 ul li {
   padding-bottom: 40px;
 }
+
+ul ul li {
+  font-size: 50%; 
+}
+
+ul ul ul li {
+  font-size: 33%; 
+}
+
+
 
 ol {
   counter-reset: my-counter;
