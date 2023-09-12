@@ -236,10 +236,14 @@ countdown::countdown(10)
 
 ## {{< fa laptop >}} Application Exercise
 
+::: nonincremental
 1. Stratify by `confounder` and calculate the average difference between exposure group within each stratum
 2. Compare this to the "Truth" from the simulation
+:::
 
 ```{r}
 #| echo: false
 countdown::countdown(5)
 ```
+
+# {{< fa laptop >}} Demo {.center}
