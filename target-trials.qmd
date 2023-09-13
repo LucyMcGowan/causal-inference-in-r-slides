@@ -1,5 +1,5 @@
 ---
-title: "Estimating counterfactuals"
+title: "Target Trials"
 author: "Lucy D'Agostino McGowan"
 format: 
   kakashi-revealjs:
