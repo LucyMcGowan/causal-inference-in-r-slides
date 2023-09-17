@@ -1,0 +1,411 @@
+---
+title: "Causal Diagrams"
+author: "Lucy D'Agostino McGowan"
+format: 
+  kakashi-revealjs:
+    self-contained: true
+footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com) & Malcolm Barrett"
+---
+
+## {.center}
+
+![](images/twitter-correlation.png)
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("setup.R"))
+
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+
+```
+
+## What causes spurious correlations?
+
+1. Random chance
+1. Confounders
+
+
+
+## How do we correct for these?
+
+:::: columns
+
+::: column
+
+### **Random chance**
+
+::: small
+* Classic statistics!
+* Measures of uncertainty (i.e.confidence intervals)
+
+:::
+
+:::
+
+::: column
+
+:::
+
+::::
+
+##
+
+![](images/spurious-correlations-book.jpeg)
+
+::: footer
+https://www.tylervigen.com/spurious-correlations
+:::
+
+## 
+
+![](images/nic-cage.png)
+
+##
+
+```{r}
+d <- tibble(
+  year = 1999:2009,
+  nic_cage = c(2, 2, 2, 3, 1, 1, 2, 3, 4, 1, 4),
+  drownings = c(109, 102, 102, 98, 85, 95, 96, 98, 123, 94, 102),
+)
+cor.test(~ nic_cage + drownings, data = d)
+```
+
+## How do we correct for these?
+
+:::: columns
+
+::: column
+### **Random chance**
+
+::: small
+::: nonincremental
+* Classic statistics!
+* Measures of uncertainty (i.e.confidence intervals)
+
+:::
+:::
+
+:::
+
+::: column
+### **Confounders**
+
+::: small
+* adjust for confounders
+
+:::
+
+:::
+
+::::
+
+## 
+
+![](images/cheese.png)
+
+##
+
+```{r}
+d <- tibble(
+  year = 2000:2009,
+  bedsheets = c(327, 456, 509, 497, 596, 573, 661, 741, 809, 717),
+  cheese = c(29.8, 30.1, 30.5, 30.6, 31.3, 31.7, 32.6, 33.1, 32.7, 32.8),
+)
+cor.test(~bedsheets + cheese, data = d)
+```
+
+## Confounder: time
+
+:::: columns
+
+::: column
+
+![](images/auto-correlation1.png)
+:::
+
+::: column 
+![](images/autocorrelation-1.png)
+:::
+
+::::
+
+##
+
+```{r}
+#| code-line-numbers: "|5-6"
+d <- tibble(
+  year = 2000:2009,
+  bedsheets = c(327, 456, 509, 497, 596, 573, 661, 741, 809, 717),
+  cheese = c(29.8, 30.1, 30.5, 30.6, 31.3, 31.7, 32.6, 33.1, 32.7, 32.8),
+  bedsheets_ind = bedsheets - lag(bedsheets),
+  cheese_ind = cheese - lag(cheese)
+)
+cor.test(~bedsheets_ind + cheese_ind, data = d)
+```
+
+## Causal diagrams
+
+::: small
+* Visual depiction of causal relationships
+* Shows variables (nodes) and relationships (edges)
+* Time goes left to right
+* An arrow from one variable to another indicates a direct causal effect
+
+:::
+
+## DAGs
+
+* **Directed**
+* **Acyclic**
+* **Graph**
+
+##
+
+![](images/fig-dag-3-1.png)
+
+# Does listening to a comedy podcast the morning before an exam improve graduate students test scores?  {background-color="#23373B"}
+
+##
+
+![](images/fig-podcast-1.png)
+
+
+## ![](images/ggdag.png){.absolute top=0 right=0 width=140}
+
+## ![](images/ggdag.png){.absolute top=0 right=0 width=140}
+
+<br />
+
+
+```{r}
+#| echo: false
+#| out.width: 100%
+#| out.height: 100%
+knitr::include_graphics("images/ggdagitty.png")
+```
+
+## ![](images/ggdag.png){.absolute top=0 right=0 width=140}
+
+<br />
+
+```{r}
+#| echo: false
+#| out.width: 100%
+#| out.height: 100%
+knitr::include_graphics("images/ggdagitty_alg.png")
+```
+
+
+## ![](images/ggdag.png){.absolute top=0 right=0 width=140}
+
+<br />
+
+```{r}
+#| echo: false
+#| out.width: 100%
+#| out.height: 100%
+knitr::include_graphics("images/ggdagitty_plots.png")
+```
+
+
+## ![](images/ggdag.png){.absolute top=0 right=0 width=140}
+
+<br />
+
+
+```{r}
+#| echo: false
+#| out.width: 100%
+#| out.height: 100%
+knitr::include_graphics("images/tidy_ggdagitty.png")
+```
+
+## {{< fa pencil >}} Application Exercise
+
+::: nonincremental
+::: small
+1. Write down factors that you think would influence the exposure and outcome
+2. Turn to your neighbor and discuss their proposal
+:::
+:::
+
+![](images/fig-podcast-1.png)
+
+```{r}
+#| echo: false
+countdown::countdown(5)
+```
+
+
+## Step 1: Specify your DAG
+
+```{r}
+library(ggdag)
+dagify(
+  podcast ~ mood + humor + prepared,
+  exam ~ mood + prepared
+)
+```
+
+## Step 1: Specify your DAG
+
+```{r}
+#| output-location: slide
+podcast_dag <- dagify(
+  podcast ~ mood + humor + prepared,
+  exam ~ mood + prepared,
+  coords = time_ordered_coords(),
+  exposure = "podcast",
+  outcome = "exam",
+  labels = c(
+    podcast = "podcast",
+    exam = "exam score",
+    mood = "mood",
+    humor = "humor",
+    prepared = "prepared"
+  )
+)
+ggdag(podcast_dag, use_labels = "label", text = FALSE) + 
+  theme_dag()
+```
+
+
+## Causal effects and backdoor paths {.large}
+
+. . .
+
+**Ok, correlation != causation. But why not?**
+
+. . .
+
+**We want to know if `x -> y`...**
+
+. . .
+
+**But other paths also cause associations**
+
+## `ggdag_paths()` {.large}
+
+Identify "backdoor" paths
+
+. . .
+
+```{r}
+#| output-location: slide
+ggdag_paths(podcast_dag)
+```
+
+
+## Closing backdoor paths {.large}
+
+. . .
+
+**We need to account for these open, non-causal paths**
+
+. . .
+
+**Randomization**
+
+. . .
+
+**Stratification, adjustment, weighting, matching, etc.**
+
+## Identifying adjustment sets
+
+```{r}
+#| output-location: slide
+#| fig.width: 8
+ggdag_adjustment_set(podcast_dag)
+```
+
+
+## Identifying adjustment sets
+
+```{r}
+library(dagitty)
+adjustmentSets(podcast_dag)
+```
+
+## Let's prove it!
+
+```{r}
+set.seed(10)
+sim_data <- podcast_dag |>
+  simulate_data()
+
+sim_data
+```
+
+
+## Let's prove it!
+
+
+```{r}
+#| echo: false
+## Model that does not close backdoor paths
+unadjusted_model <- lm(exam ~ podcast, sim_data) |>
+  broom::tidy(conf.int = TRUE) |>
+  dplyr::filter(term == "podcast") |>
+  mutate(formula = "podcast")
+
+## Model that closes backdoor paths
+adjusted_model <- lm(exam ~ podcast + mood + prepared, sim_data) |>
+  broom::tidy(conf.int = TRUE) |>
+  dplyr::filter(term == "podcast") |>
+  mutate(formula = "podcast + mood + prepared")
+
+bind_rows(
+  unadjusted_model,
+  adjusted_model
+) |> 
+  ggplot(aes(x = estimate, y = formula, xmin = conf.low, xmax = conf.high)) +
+  geom_vline(xintercept = 0, linewidth = 1, color = "grey80") + 
+  geom_pointrange(fatten = 3, size = 1) +
+  theme_minimal(18) +
+  labs(
+    y = NULL,
+    caption = "correct effect size: 0"
+  )
+```
+
+
+## Choosing what variables to include {.large}
+
+. . .
+
+**Adjustment sets and domain knowledge**
+
+. . .
+
+**Conduct sensitivity analysis if you don't have something important**
+
+## Common trip ups {.large}
+
+. . .
+
+**Using prediction metrics**
+
+. . .
+
+**The 10% rule**
+
+. . .
+
+**Predictors of the outcome, predictors of the exposure**
+
+. . .
+
+**Forgetting to consider time-ordering (something has to happen before something else to cause it!)**
+
+. . .
+
+**Selection bias and colliders (more later!)**
+
+. . .
+
+**Incorrect functional form for confounders (e.g. BMI often non-linear)**
