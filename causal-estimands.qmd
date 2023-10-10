@@ -1,0 +1,339 @@
+---
+title: "Causal Estimands"
+author: "Lucy D'Agostino McGowan"
+format: 
+  kakashi-revealjs:
+    self-contained: true
+footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
+---
+
+
+# {background-color="#23373B"}
+
+- Estimands
+- Estimators
+- Estimates
+
+```{r}
+#| include: false
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+```
+
+## 
+
+::: footer
+::: smaller
+[Home baker attempts to make a Bluey birthday cake using Woolies mudcakes - but is left in hysterics over her 'abomination' of a dessert](https://www.dailymail.co.uk/femail/food/article-11879919/Woolworths-mudcake-hack-Home-bakers-hilarious-Bluey-cake-fail-leaves-internet-stitches.html)
+:::
+:::
+:::: {.columns}
+
+::: {.column width="33%" .fragment}
+### Estimand {.box}
+
+![](images/bluey-estimand.jpg)
+
+::: smallest
+@tigga_mac TikTok
+:::
+
+:::
+
+::: {.column width="33%" .fragment}
+### Estimator {.box}
+
+![](images/bluey-estimator.png)
+<br><br>
+
+::: smallest
+https://www.bluey.tv/make/bluey-celebration-cake/
+:::
+:::
+
+::: {.column width="33%" .fragment}
+### Estimate {.box}
+
+![](images/bluey-estimate.jpg)
+<br>
+
+::: smallest
+Coles Mudcake Hacks Facebook
+:::
+
+:::
+
+::::
+
+##
+
+:::: {.columns}
+
+::: {.column width="33%"}
+
+### Estimand {.box}
+
+::: {.fragment}
+
+$$E[Y(1) - Y(0)]$$
+:::
+:::
+
+::: {.column width="33%"}
+### Estimator {.box}
+
+::: {.fragment}
+$$\sum_{i=1}^N\frac{Y_i\times X_i}{N_A}-\frac{Y_i \times(1 - X_i)}{N_B}$$
+:::
+:::
+
+
+::: {.column width="33%"}
+### Estimate {.box}
+
+::: {.fragment}
+
+::: small
+```{r}
+library(tidyverse)
+set.seed(928)
+ab <- tibble(
+  x = rbinom(100, 1, 0.5),
+  y = x + rnorm(100)
+)
+
+ab |>
+  summarise(
+    n_a = sum(x),
+    n_b = sum(1 - x),
+    estimate = sum(
+      (y * x) / n_a -
+        y * (1 - x) / n_b
+    )
+  )
+```
+:::
+
+:::
+
+:::
+
+
+::::
+
+## Weighted estimator
+
+
+$$\frac{\sum_{i=1}^NY_i\times X_i\times w_i}{\sum_{i=1}^NX_i\times w_i}-\frac{\sum_{i=1}^NY_i\times(1-X_i)\times w_i}{\sum_{i=1}^N(1-X_i)\times w_i}$$
+
+## Fit the propensity model
+
+```{r}
+library(broom)
+library(touringplans)
+
+seven_dwarfs <- seven_dwarfs_train_2018 |>
+  filter(wait_hour == 9) |>
+  mutate(park_extra_magic_morning = factor(
+    park_extra_magic_morning,
+    labels = c("No Magic Hours", "Extra Magic Hours")
+  ))
+
+seven_dwarfs_with_ps <- glm(
+  park_extra_magic_morning ~ park_ticket_season + park_close + park_temperature_high,
+  data = seven_dwarfs,
+  family = binomial()
+) |>
+  augment(type.predict = "response", data = seven_dwarfs)
+```
+
+## Examine the unadjusted covariates
+
+
+```{r}
+#| output-location: slide
+library(gtsummary)
+library(labelled)
+seven_dwarfs_with_ps <- seven_dwarfs_with_ps |>
+  set_variable_labels(
+    park_ticket_season = "Ticket Season",
+    park_close = "Close Time",
+    park_temperature_high = "Historic High Temperature"
+  )
+
+tbl_summary(
+  seven_dwarfs_with_ps,
+  by = park_extra_magic_morning,
+  include = c(park_ticket_season, park_close, park_temperature_high)
+) |>
+  # add an overall column to the table
+  add_overall(last = TRUE)
+```
+
+## Average treatment effect
+
+::: {.fragment}
+### Question {.box}
+
+Should we make every day an extra magic morning (or not)?
+:::
+
+
+::: {.fragment}
+### Estimand {.box}
+
+$E[Y(1)-Y(0)]$
+:::
+ 
+::: {.fragment}
+### Weight {.box}
+
+$$w_{ATE} = \frac{X}{p} + \frac{(1 - X)}{1 - p}$$
+:::
+
+## ATE weights
+
+
+```{r}
+#| output-location: slide
+library(propensity)
+seven_dwarfs_wts <- seven_dwarfs_with_ps |>
+  mutate(w_ate = wt_ate(.fitted, park_extra_magic_morning))
+
+ggplot(seven_dwarfs_wts, aes(x = w_ate)) +
+  geom_histogram(bins = 50)
+```
+
+## ATE weighted table
+
+```{r}
+#| output-location: slide
+library(survey)
+seven_dwarfs_svy <- svydesign(
+  ids = ~1,
+  data = seven_dwarfs_wts,
+  weights = ~w_ate
+)
+tbl_svysummary(
+  seven_dwarfs_svy,
+  by = park_extra_magic_morning,
+  include = c(park_ticket_season, park_close, park_temperature_high)
+) |>
+  add_overall(last = TRUE)
+```
+
+## ATE weighted histogram
+
+```{r}
+#| output-location: slide
+library(halfmoon)
+ggplot(seven_dwarfs_wts, aes(.fitted, group = park_extra_magic_morning)) +
+  geom_mirror_histogram(bins = 50) +
+  geom_mirror_histogram(
+    aes(fill = park_extra_magic_morning, weight = w_ate),
+    bins = 50,
+    alpha = 0.5
+  ) +
+  scale_y_continuous(labels = abs) +
+  labs(
+    x = "propensity score",
+    fill = "Extra Magic Morning"
+  )
+```
+
+## Average treatment effect among the treated
+
+::: {.fragment}
+### Question {.box}
+
+Should we stop extra magic hours on days that have them?
+:::
+
+
+::: {.fragment}
+### Estimand {.box}
+
+$E[Y(1)-Y(0) | X = 1]$
+:::
+ 
+::: {.fragment}
+### Weight {.box}
+
+$$w_{ATT} = X + \frac{(1 - X)p}{1 - p}$$
+:::
+
+## ATT weights
+
+```{r}
+#| output-location: slide
+seven_dwarfs_wts <- seven_dwarfs_wts |>
+  mutate(w_att = wt_att(.fitted, park_extra_magic_morning))
+
+ggplot(seven_dwarfs_wts, aes(w_att)) +
+  geom_histogram(bins = 50)
+```
+
+## ATT weighted table
+
+```{r}
+#| output-location: slide
+#| message: false
+#| warning: false
+seven_dwarfs_svy <- svydesign(
+  ids = ~1,
+  data = seven_dwarfs_wts,
+  weights = ~w_att
+)
+tbl_svysummary(
+  seven_dwarfs_svy,
+  by = park_extra_magic_morning,
+  include = c(park_ticket_season, park_close, park_temperature_high)
+) |>
+  add_overall(last = TRUE)
+```
+
+## ATT weighted histogram
+
+```{r}
+#| output-location: slide
+ggplot(seven_dwarfs_wts, aes(.fitted, group = park_extra_magic_morning)) +
+  geom_mirror_histogram(bins = 50) +
+  geom_mirror_histogram(
+    aes(fill = park_extra_magic_morning, weight = w_att),
+    bins = 50,
+    alpha = 0.5
+  ) +
+  scale_y_continuous(labels = abs) +
+  labs(
+    x = "propensity score",
+    fill = "Extra Magic Morning"
+  )
+```
+
+
+## {{< fa pencil >}} Application Exercise
+
+::: nonincremental
+1. What causal question would the ATC weights answer?
+2. What causal question would the ATM/ATO weights answer?
+:::
+
+
+## {{< fa laptop >}} Application Exercise
+
+::: nonincremental
+
+Open `appex-03`
+
+::: small
+1. Calculate ATO weights
+2. Create a weighted table using the ATO weights
+3. Examine a mirrored histogram using the ATO weights
+4. What causal question is this answering?
+:::
+
+:::
+
+

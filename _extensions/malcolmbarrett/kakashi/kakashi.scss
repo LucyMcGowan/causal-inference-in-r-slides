@@ -316,3 +316,15 @@ ol li::before {
 .smaller { font-size: 50% }
 .smallest { font-size: 30% }
 .tiny { font-size: 50% }
+
+.box {
+  margin: 0em auto;
+  overflow: hidden;
+  padding: 0.1em 0.4em;
+  font-weight: 600;
+  display: table;
+  text-align: center;
+  background-color: #E69F00;
+  color: $light-grey !important;
+}
+
