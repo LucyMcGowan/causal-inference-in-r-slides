@@ -281,7 +281,7 @@ ggplot(p, aes(x = x, y = y, color = col)) +
 
 ### Average Treatment Effect among the Treated (ATT)
 
-$$\tau = E[Y(1) - Y(0) | Z = 1]$$
+$$\tau = E[Y(1) - Y(0) | X = 1]$$
 ```{r}
 #| echo: false
 #| fig.height: 3.0
@@ -324,7 +324,7 @@ glimpse(matched_data)
 
 ### Average Treatment Effect among the Controls (ATC)
 
-$$\tau = E[Y(1) - Y(0) | Z = 0]$$
+$$\tau = E[Y(1) - Y(0) | X = 0]$$
 ```{r}
 #| echo: false
 #| fig.height: 3.0
@@ -430,10 +430,10 @@ Direct Adjustment
 
 Average Treatment Effect (ATE)
 
-$$\Large w_{ATE} = \frac{Z_i}{p_i} + \frac{1-Z_i}{1 - p_i}$$
+$$\Large w_{ATE} = \frac{X_i}{p_i} + \frac{1-X_i}{1 - p_i}$$
 ```{r}
 #| eval: false
-(Z / p) + ((1 - Z) / (1 - p))
+(X / p) + ((1 - X) / (1 - p))
 ```
 
 
@@ -443,21 +443,21 @@ $$\Large w_{ATE} = \frac{Z_i}{p_i} + \frac{1-Z_i}{1 - p_i}$$
 . . .
 
 Average Treatment Effect Among the Treated (ATT)
-$$\Large w_{ATT} = \frac{p_i Z_i}{p_i} + \frac{p_i (1-Z_i)}{1-p_i}$$
+$$\Large w_{ATT} = \frac{p_i X_i}{p_i} + \frac{p_i (1-X_i)}{1-p_i}$$
 
 ```{r}
 #| eval: false
-((p * Z) / p) + ((p * (1 - Z)) / (1 - p))
+((p * X) / p) + ((p * (1 - X)) / (1 - p))
 ```
 
 ## Target estimands: ATT & ATC {background-color="#23373B"}
 
 Average Treatment Effect Among the Controls (ATC)
-$$\Large w_{ATC} = \frac{(1-p_i)Z_i}{p_i} + \frac{(1-p_i)(1-Z_i)}{(1-p_i)}$$
+$$\Large w_{ATC} = \frac{(1-p_i)X_i}{p_i} + \frac{(1-p_i)(1-X_i)}{(1-p_i)}$$
 
 ```{r}
 #| eval: false
-(((1 - p) * Z) / p) + (((1 - p) * (1 - Z)) / (1 - p))
+(((1 - p) * X) / p) + (((1 - p) * (1 - X)) / (1 - p))
 ```
 
 ## Target estimands: ATM & ATO {background-color="#23373B"}
@@ -465,23 +465,23 @@ $$\Large w_{ATC} = \frac{(1-p_i)Z_i}{p_i} + \frac{(1-p_i)(1-Z_i)}{(1-p_i)}$$
 . . .
 
 Average Treatment Effect Among the Evenly Matchable (ATM)
-$$\Large w_{ATM} = \frac{\min \{p_i, 1-p_i\}}{Z_ip_i + (1-Z_i)(1-p_i)}$$
+$$\Large w_{ATM} = \frac{\min \{p_i, 1-p_i\}}{X_ip_i + (1-X_i)(1-p_i)}$$
 
 
 ```{r}
 #| eval: false
-pmin(p, 1 - p) / (Z * p + (1 - Z) * (1 - p))
+pmin(p, 1 - p) / (X * p + (1 - X) * (1 - p))
 ```
 
 ## Target estimands: ATM & ATO {background-color="#23373B"}
 
 Average Treatment Effect Among the Overlap Population
-$$\Large w_{ATO} = (1-p_i)Z_i + p_i(1-Z_i)$$
+$$\Large w_{ATO} = (1-p_i)X_i + p_i(1-X_i)$$
 
 
 ```{r}
 #| eval: false
-(1 - p) * Z + p * (1 - Z)
+(1 - p) * X + p * (1 - X)
 ```
 
 ## Histogram of propensity scores
@@ -612,7 +612,7 @@ ggplot(df, aes(.fitted)) +
 <br />
 
 Average Treatment Effect (ATE)
-$w_{ATE} = \frac{Z_i}{p_i} + \frac{1-Z_i}{1 - p_i}$
+$w_{ATE} = \frac{X_i}{p_i} + \frac{1-X_i}{1 - p_i}$
   
 ```{r}
 #| code-line-numbers: "|4"
