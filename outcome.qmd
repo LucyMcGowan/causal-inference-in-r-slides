@@ -1,5 +1,5 @@
 ---
-title: "Assumptions in Causal Inference"
+title: "Outcome Models"
 author: "Lucy D'Agostino McGowan"
 format: kakashi-revealjs
 footer: "Slides by Dr. Malcom Barret & [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"

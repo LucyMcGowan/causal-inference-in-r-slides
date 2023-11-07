@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.4.298">
 
   <meta name="author" content="Lucy D’Agostino McGowan">
-  <title>Assumptions in Causal Inference</title>
+  <title>Outcome Models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -393,7 +393,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#23373B" data-color="#EDEEF" class="quarto-title-block center">
-  <h1 class="title">Assumptions in Causal Inference</h1>
+  <h1 class="title">Outcome Models</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -479,16 +479,16 @@ Lucy D’Agostino McGowan
 # A tibble: 1,001 × 2
    splits             id           
    &lt;list&gt;             &lt;chr&gt;        
- 1 &lt;split [1566/563]&gt; Bootstrap0001
- 2 &lt;split [1566/555]&gt; Bootstrap0002
- 3 &lt;split [1566/578]&gt; Bootstrap0003
- 4 &lt;split [1566/569]&gt; Bootstrap0004
+ 1 &lt;split [1566/569]&gt; Bootstrap0001
+ 2 &lt;split [1566/550]&gt; Bootstrap0002
+ 3 &lt;split [1566/569]&gt; Bootstrap0003
+ 4 &lt;split [1566/583]&gt; Bootstrap0004
  5 &lt;split [1566/563]&gt; Bootstrap0005
  6 &lt;split [1566/572]&gt; Bootstrap0006
- 7 &lt;split [1566/581]&gt; Bootstrap0007
- 8 &lt;split [1566/558]&gt; Bootstrap0008
- 9 &lt;split [1566/583]&gt; Bootstrap0009
-10 &lt;split [1566/591]&gt; Bootstrap0010
+ 7 &lt;split [1566/587]&gt; Bootstrap0007
+ 8 &lt;split [1566/575]&gt; Bootstrap0008
+ 9 &lt;split [1566/575]&gt; Bootstrap0009
+10 &lt;split [1566/568]&gt; Bootstrap0010
 # ℹ 991 more rows</code></pre>
 </div>
 </div></section><section id="use-rsample-to-bootstrap-our-causal-effect-1" class="slide level2">
@@ -499,8 +499,8 @@ Lucy D’Agostino McGowan
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic  p.value
   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)     1.55     0.282      5.50 4.33e- 8
-2 qsmk            4.21     0.399     10.6  3.16e-25</code></pre>
+1 (Intercept)     1.66     0.279      5.94 3.42e- 9
+2 qsmk            3.27     0.394      8.30 2.19e-16</code></pre>
 </div>
 </div>
 </section>
@@ -546,7 +546,7 @@ Lucy D’Agostino McGowan
 </section>
 <section id="your-turn" class="slide level2">
 <h2><em>Your Turn</em></h2>
-<p></p><div class="countdown" id="timer_cd6cf1dc" data-update-every="1" tabindex="0" style="right:0;bottom:0;"> <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div> <code class="countdown-time"><span class="countdown-digits minutes">12</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code> </div><p></p>
+<p></p><div class="countdown" id="timer_6efbb98a" data-update-every="1" tabindex="0" style="right:0;bottom:0;"> <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div> <code class="countdown-time"><span class="countdown-digits minutes">12</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code> </div><p></p>
 <h3 id="create-a-function-called-ipw_fit-that-fits-the-propensity-score-model-and-the-weighted-outcome-model-for-the-effect-between-park_extra_magic_morning-and-wait_minutes_posted_avg">Create a function called <code>ipw_fit</code> that fits the propensity score model and the weighted outcome model for the effect between <code>park_extra_magic_morning</code> and <code>wait_minutes_posted_avg</code></h3>
 <h3 id="using-the-bootstraps-and-int_t-functions-to-estimate-the-final-effect.">Using the <code>bootstraps()</code> and <code>int_t()</code> functions to estimate the final effect.</h3>
 </section>
@@ -612,7 +612,7 @@ qsmk        -0.05050382  0.27614347</code></pre>
 </section>
 <section id="your-turn-1" class="slide level2">
 <h2><em>Your Turn</em></h2>
-<p></p><div class="countdown" id="timer_d7022415" data-update-every="1" tabindex="0" style="right:0;bottom:0;"> <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div> <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code> </div><p></p>
+<p></p><div class="countdown" id="timer_85402a1d" data-update-every="1" tabindex="0" style="right:0;bottom:0;"> <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div> <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code> </div><p></p>
 <h3 id="use-the-sandwich-package-to-calcualte-the-uncertainty-for-your-weighted-model">Use the <code>sandwich</code> package to calcualte the uncertainty for your weighted model</h3>
 <h3 id="repeat-this-using-the-survey-package">Repeat this using the <code>survey</code> package</h3>
 <div class="footer footer-default">
