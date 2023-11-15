@@ -1,5 +1,5 @@
 ---
-title: "Causal inference is not just a statistics problem"
+title: "Sensitivity Analyses"
 format: kakashi-revealjs
 footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
 execute:
