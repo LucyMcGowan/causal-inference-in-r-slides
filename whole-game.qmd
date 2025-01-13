@@ -6,7 +6,7 @@ footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
 ---
 
 
-##  {background-color="#23373B"}
+## {.center .small background-color="#533146"}
 
 ```{r}
 #| label: setup
@@ -36,25 +36,30 @@ set.seed(1234)
 5.  Estimate causal effects (e.g. IPW)
 6.  Sensitivity analysis (tipping points)
 
-##  {.center background-color="#23373B"}
+
+##  {.center background-color="#533146"}
 
 ### **We'll focus on the broader ideas behind each step and what they look like all together; we don't expect you to fully digest each idea. We'll spend the rest of the class taking up each step in detail**
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
 ### **Does using a bed net reduce the risk of malaria?**
 
 ## Malaria and its Impact
 
+::: small
 -   Malaria remains a significant public health concern
 -   Six countries (Nigeria, DRC, Uganda, Mozambique, Angola, Burkina Faso) saw nearly 50% of all malaria deaths
 -   Most fatalities happened among children under 5
+:::
 
 ## Role of Bed Nets
 
+::: small
 -   Bed nets are vital in preventing malaria
 -   They create a barrier against mosquito bites, the main carriers of malaria parasites
 -   Several randomized studies have shown that bed nets reduce the risk of malaria
+:::
 
 ## Historical Use of Bed Nets
 
@@ -103,8 +108,10 @@ Since we now know bed net use is very effective, withholding nets would be uneth
 
 #### *Does using a **bed net** reduce the risk of malaria?*
 
+::: small
 -   What do we mean by "bed net"?
 -   There are several types of nets: untreated bed nets, insecticide-treated bed nets, and newer long-lasting insecticide-treated bed nets.
+:::
 
 ## Specifiying the causal question
 
@@ -112,8 +119,10 @@ Since we now know bed net use is very effective, withholding nets would be uneth
 
 #### *Does using a bed net **reduce the risk** of malaria?*
 
+::: small
 -   Risk compared to what?
 -   Are we, for instance, comparing insecticide-treated bed nets to no net? Untreated nets? Or are we comparing a new type of net, like long-lasting insecticide-treated bed nets, to nets that are already in use?
+:::
 
 ## Specifiying the causal question
 
@@ -121,9 +130,11 @@ Since we now know bed net use is very effective, withholding nets would be uneth
 
 #### *Does using a bed net reduce the **risk of malaria?***
 
+::: small
 -   Risk as defined by what?
 -   Whether or not a person contracted malaria?
 -   Whether a person died of malaria?
+:::
 
 ## Specifiying the causal question
 
@@ -131,12 +142,14 @@ Since we now know bed net use is very effective, withholding nets would be uneth
 
 #### ***Does using** a bed net reduce the **risk of malaria?***
 
+::: small
 -   Among whom?
 -   What is the population to which we're trying to apply this knowledge?
 -   Who is it practical to include in our study?
 -   Who might we need to exclude?
+:::
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
 ### **Does using insecticide-treated bed nets decrease the risk of contracting malaria among households in country X?**
 
@@ -182,7 +195,7 @@ skimmed[c(2, 5, 6, 12)] |>
 ```
 :::
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
 ### **draw your assumptions**
 
@@ -261,7 +274,7 @@ mosquito_dag |>
 -   Health is causally impacted by **income**.
 :::
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
 ### What do I need to control for?
 
@@ -366,11 +379,11 @@ lm(
   filter(term == "netTRUE")
 ```
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
 ### **model your assumptions**
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
 ### counterfactual: what if <u>everyone</u> used a net vs. what if <u>no one</u> used a net
 
@@ -404,7 +417,7 @@ net_data_wts |>
   select(net, .fitted, wts)
 ```
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
 ### **diagnose your model assumptions**
 
@@ -477,7 +490,7 @@ net_data_wts |>
 ```
 
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
 ### **estimate the causal effects**
 
@@ -620,11 +633,11 @@ bind_rows(
 
 
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
-### *Our causal effect estimate: **-13.4 (95% CI -12.5, -11.6)***
+### *Our causal effect estimate: **-12.5 (95% CI -13.4, -11.6)***
 
-##  {.center background-color="#23373B"}
+##  {.center background-color="#533146"}
 
 ### **sensitivity analysis**
 
@@ -742,18 +755,18 @@ mosquito_dag_full |>
 * The unmeasured confounder is in `net_data_full` as genetic_resistance. 
 * If we recalculate the IPW estimate of the average treatment effect of nets on malaria risk, we get -10.2 (95% CI -11.2, -9.4), much closer to the actual answer of -10.
 
-## {.center background-color="#23373B"}
+## {.center .small background-color="#533146"}
 
-::: small
-1. Specified a causal question (for the average treatment effect)
+
+1. Specified a causal question (for average treatment effect)
 1. Drew our assumptions using a causal diagram (using DAGs)
-1. Modeled our assumptions (using propensity score weighting)
+1. Modeled our assumptions (propensity score weighting)
 1. Diagnosed our models (by checking confounder balance after weighting)
 1. Estimated the causal effect (using inverse probability weighting)
 1. Conducted sensitivity analysis on the effect estimate (using tipping point analysis)
-:::
 
-##  {.center background-color="#23373B"}
 
-### Check out [Chapter 2](https://www.r-causal.org/chapters/chapter-02) of Causal Inference in R
+##  {.center background-color="#533146"}
+
+### Check out [Chapter 2](https://www.r-causal.org/chapters/02-whole-game) of Causal Inference in R
 
