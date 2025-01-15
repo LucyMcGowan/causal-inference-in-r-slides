@@ -1,0 +1,410 @@
+/*-- scss:defaults --*/
+// importing fonts
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i|IBM+Plex+Mono:400,500);
+@import url(//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css);
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+
+// colors
+$pantone1: #533146 !default; // primary
+$pantone2: #005348 !default; // seconary
+$pantone3: #A9C0CB !default; // light with primary
+$pantone4: #9AA067 !default; // light with secondary
+$orange: #E69F00 !default;
+$light-blue: #56B4E9 !default;
+$green: #009E73 !default;
+$yellow: #F0E442 !default;
+$blue: #0072B2 !default;
+$dark-orange: #D55E00 !default;
+$pink: #CC79A7 !default;
+
+$white:    #fff !default;
+$gray-lucy: #f2f2f1ff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+
+$primary:       $pantone1 !default;
+$secondary:     $pantone2 !default;
+$success:       $green !default;
+$info:          $blue !default;
+$warning:       $yellow !default;
+$danger:        $dark-orange !default;
+$light:         $gray-100 !default;
+$dark:          $gray-800 !default;
+
+// fonts
+$font-family-serif: 'Fira Sans','Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif !default;
+
+// headings
+$presentation-heading-font: $font-family-serif !default;
+$presentation-heading-color: $gray-100 !default;
+$h1-font-size: 1.6em !default;
+$h2-font-size: 1.3em !default;
+$h3-font-size: 1.15em !default;
+
+//code
+$code-color: $green !default;
+$font-family-monospace: 'IBM Plex Mono', 'Lucida Console', Monaco, monospace !default;
+
+// quarto variables
+$body-bg: $gray-lucy !default;
+$body-color: $gray-900 !default;
+$link-color: $pink !default;
+$presentation-font-size-root: 36px !default;
+$selection-bg: $gray-lucy !default;
+$selection-color: $body-color !default;
+
+/*-- scss:rules --*/
+
+.reveal .slide:has(h2)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100vw;  
+  right: -100vw; 
+  height: 115px; 
+  background-color: $primary;  
+  z-index: -1; 
+}
+
+.reveal h2 {
+  margin-bottom: 50px;  
+  padding: 20px; 
+  position: relative;
+  z-index: 1; 
+  font-family: "Lobster", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.reveal .columns {
+    margin-top: 20px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+
+    .column {
+      width: 47% !important;
+      font-size: 80% !important; 
+      ul {
+        font-size: inherit; 
+      }
+      h3 {
+        background-color: $secondary;
+        padding: 10px !important;
+        border-radius: 5px !important;
+        margin-bottom: 15px !important;
+        font-size: $h3-font-size !important;
+        text-align: center;
+      }
+    }
+  }
+  
+.light h3 {
+  background-color: $gray-400 !important;
+}
+
+.reveal pre code {
+  font-size: 1.3em;
+  padding: 0.5em;
+  line-height: 1.2em;
+  overflow: visible;
+}
+
+#title-slide {
+  background-size: cover;
+  background-color: $primary;
+  color: $gray-lucy;
+}
+
+.title h1 {
+  color: $orange;
+  font-size: 72px;
+  text-shadow: none;
+  vertical-align: bottom;
+}
+
+.subtitle {
+  color: $light-blue;
+  text-shadow: none;
+  font-size: 72px;
+  font-weight: bold;
+}
+
+.quarto-title-authors {
+  color: $gray-lucy;
+  font-size: 64px;
+  font-family: $presentation-heading-font;
+}
+
+.footer {
+  font-family: $presentation-heading-font;
+}
+
+.reveal .slide-number {
+  font-family: $presentation-heading-font;
+}
+
+.reveal .panel-tabset [role=tab] {
+    font-size: 0.8em;
+}
+
+.reveal .footer {
+    color: $gray-900;
+}
+
+section.has-dark-background {
+  background-size: cover;
+  color: $gray-lucy;
+  font-weight: bold;
+  text-shadow: none;
+}
+
+section.has-dark-background h1  {
+  color: $orange;
+  font-weight: 500;
+}
+
+section.has-dark-background h2  {
+  color: $light-blue;
+  font-weight: 500;
+}
+
+a, a > code  {
+  color: $pink;
+  text-decoration: none;
+}
+
+section.has-dark-background a, a > code  {
+  color: $pink;
+  text-decoration: none;
+}
+
+section.has-dark-background code  {
+  color: $green;
+}
+
+strong {
+  color: $orange;
+}
+
+em {
+  color: $light-blue;
+  font-style: normal;
+  font-weight: bold;
+}
+
+del {
+  color: $gray-500;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul {
+  font-size: 2.5rem;
+  list-style-type: none;
+  text-align: left;
+  font-weight: 500;
+  padding: 1em;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+ul ul li {
+  font-size: 2.2rem;
+}
+
+ul ul ul li {
+  font-size: 2.1rem;
+}
+
+li {
+  font-size: inherit;
+}
+
+ul li {
+  padding-bottom: calc(0.4em * (100% / font-size));
+}
+
+
+ol {
+  counter-reset: my-counter;
+  list-style: none;
+  padding-left: 40px;
+  font-size: 125%;
+  font-weight: bold;
+  text-align: left;
+}
+
+.fragment:not(.current-fragment) {
+  color: $gray-200;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) {
+  color: $gray-800;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) {
+  color: $gray-800;
+}
+
+section.has-dark-background .current-fragment {
+  color: $gray-200;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) strong {
+  color: $gray-800;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) em {
+  color: $gray-800;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) a, a > code  {
+  color: $gray-800;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) code {
+  color: $gray-800;
+}
+
+section.has-dark-background .fragment:not(.current-fragment) del {
+  color: $gray-800;
+}
+
+.fragment:not(.current-fragment) code {
+  color: $gray-200;
+}
+
+.fragment:not(.current-fragment)::before {
+  background-color: lighten($gray-200, 3%);
+}
+
+section.has-dark-background .fragment:not(.current-fragment)::before {
+  background-color: lighten($gray-800, 3%);
+}
+
+.fragment:not(.current-fragment) strong {
+  color: $gray-200;
+}
+
+.fragment:not(.current-fragment) em {
+  color: $gray-200;
+}
+
+.fragment:not(.current-fragment) del {
+  color: $gray-200;
+}
+
+.fragment:not(.current-fragment) a {
+  color: $gray-200;
+}
+
+.current-fragment {
+  color: $body-color;
+}
+
+.reveal
+  div.sourceCode
+  pre
+  code.has-line-highlights
+  > span:not(.highlight-line) {
+  opacity: 0.1 !important;
+}
+
+.reveal
+  div.sourceCode
+  pre
+  code.has-line-highlights
+  > span.highlight-line {
+  font-weight: bold;
+}
+
+ol li {
+  counter-increment: my-counter;
+  padding-left: 40px;
+  position: relative;
+  font-size: 125%;
+  margin: 20px 0;
+  display: block;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+ol li::before {
+  content: counter(my-counter);
+  color: #fff;
+  font-size: 100%;
+  font-weight: bold;
+  position: absolute;
+  left: -40px;
+  line-height: 60px;
+  width: 60px;
+  height: 60px;
+  top: 10%;
+  background: $light-blue;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.slide-menu-wrapper {
+  display: none;
+  visibility: hidden;
+}
+
+.middle {
+  vertical-align: middle;
+}
+
+.center img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center {
+  text-align: center;
+}
+
+.huge { font-size: 200% }
+.extra-large { font-size: 150% }
+.large { font-size: 130% }
+.medium { font-size: 115% }
+.small { font-size: 70% !important }
+.smaller { font-size: 50% }
+.smallest { font-size: 30% }
+.tiny { font-size: 50% }
+
+.box {
+  margin: 0em auto;
+  overflow: hidden;
+  padding: 0.1em 0.4em;
+  font-weight: 600;
+  display: table;
+  text-align: center;
+  background-color: $yellow;
+  color: $gray-800 !important;
+}
+
+img {
+  border: 4px solid $primary;
+  border-radius: 4px;
+}
+
+

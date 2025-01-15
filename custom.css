@@ -1,0 +1,45 @@
+/* Define color variables */
+:root {
+  --one: #533146;
+  --two: #ff8c00;
+  --three: #ffd700;
+  --text-color: white;
+}
+
+.title {
+  padding-top: 0em;
+  border-top: 110px solid #777777;
+}
+
+.title h1 {
+  margin-top: -85px;
+  margin-bottom: 50px;
+}
+
+.title-1 {
+  border-top-color: var(--one);
+}
+
+.box-1 {
+  background-color: var(--one);
+}
+
+.box-2 {
+  background-color: var(--two);
+}
+
+.box-3 {
+  background-color: var(--three);
+}
+
+.box-7,.box-6, .box-5, .box-4, .box-3,  .box-2, .box-1 {
+    color: var(--text-color);
+}
+.box-7, .box-inv-7, .box-6, .box-inv-6, .box-5, .box-inv-5, .box-4, .box-inv-4, .box-3, .box-inv-3, .box-2, .box-inv-2, .box-1, .box-inv-1 {
+  margin: 0.2em auto;
+  overflow: hidden;
+  padding: 0.1em 0.4em;
+  font-weight: 600;
+  display: table;
+  text-align: center;
+}

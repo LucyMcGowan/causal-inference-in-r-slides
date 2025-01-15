@@ -1,0 +1,489 @@
+---
+title: "From Casual to Causal"
+author: "Lucy D'Agostino McGowan"
+format: 
+  revealjs: 
+    theme: custom.scss
+    incremental: true
+    title-slide-attributes:
+      data-background-color: "#533146"
+      data-color: "#EDEEF"
+    slide-number: c/t
+    show-slide-number: all
+    menu: false
+footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
+execute: 
+  echo: true
+  warning: false
+  message: false
+  dev: "ragg_png"
+  dpi: 320
+  out.width: "80%"
+  fig.width: 6
+  fig.asp: 0.618
+  fig.retina: 2
+  fig.align: "center"
+  fig.show: "hold"
+---
+
+## Causal questions
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("setup.R"))
+
+options(
+  tibble.max_extra_cols = 6, 
+  tibble.width = 60
+)
+
+```
+
+
+- The heart of causal analysis is the causal question.
+- It dictates data analysis, methods, and target populations.
+
+
+## Goals of data analysis 
+
+Causal questions are part of a broader set of questions we can ask with statistical techniques related to the primary tasks of data science: 
+
+:::: columns 
+
+::: {.column .fragment}
+### description 
+
+:::
+
+::: {.column .fragment}
+
+### prediction 
+
+:::
+
+::: {.column .fragment}
+
+### causal inference 
+:::
+
+::::
+
+
+
+
+## Goals of data analysis 
+
+::: small
+- The goal is often muddled by both the techniques we use (regression, for instance, is helpful for all three tasks) and the way we talk about them. 
+- When researchers are interested in causal inference from non-randomized data, we often use euphemistic language like *“association”* instead of declaring our intent to estimate a causal effect 
+:::
+
+::: footer
+Haber et al. 2022. “Causal and Associational Language in Observational Health Research: A Systematic Evaluation.” Am J Epidemiol 191 (12): 2084–97.
+:::
+
+## Schrödinger’s Causality
+
+::: small
+- "Associate" most common root word for effects.
+- Only 1% used "cause."
+- Action recommendations in 33% of studies.
+- Stronger action recommendations than implied by effect description.
+- Only 4% used formal causal models.
+:::
+
+::: footer
+Haber et al. 2022. “Causal and Associational Language in Observational Health Research: A Systematic Evaluation.” Am J Epidemiol 191 (12): 2084–97.
+:::
+
+## Schrödinger’s Causality
+
+```{r}
+#| fig-height: 15
+#| echo: false
+#| fig-width: 25
+
+rankings <-  read_csv(here::here("data/word_rankings.csv"), show_col_types = FALSE) |> 
+  janitor::clean_names() 
+
+lvls <- rankings |> 
+  count(rating, root_word) |> 
+  filter(rating == "Strong") |>
+  arrange(desc(n)) |> 
+  mutate(root_word = fct_inorder(root_word)) |> 
+  pull(root_word) |> 
+  levels()
+
+rankings |>
+  count(rating, root_word) |> 
+  mutate(root_word = factor(root_word, levels = lvls)) |> 
+  filter(!is.na(root_word)) |> 
+  group_by(rating) |> 
+  mutate(rank = n / sum(n)) |> 
+  ungroup() |> 
+  drop_na(rating) |> 
+  mutate(rating = factor(rating, levels = c("None", "Weak", "Moderate", "Strong"))) |> 
+  ggplot(aes(x = rank, y = root_word, fill = rating)) + 
+  geom_col(position = position_fill(reverse = TRUE)) +
+  scale_fill_viridis_d( direction = -1)  +
+  labs(y = "root word") +
+  theme(axis.ticks = element_blank(), panel.grid = element_blank(),
+        legend.position = "right",
+        text = element_text(size = 25)) 
+```
+
+
+::: footer
+Haber et al. 2022. “Causal and Associational Language in Observational Health Research: A Systematic Evaluation.” Am J Epidemiol 191 (12): 2084–97.
+:::
+
+#  "Our results suggest that *Schrödinger's causal inference* - where studies avoid stating (or even explicitly deny) an interest in estimating causal effects yet are otherwise embedded with causal intent, inference, implications, and recommendations - is common."   {background-color="#533146" .small}
+
+::: footer
+Haber et al. 2022. “Causal and Associational Language in Observational Health Research: A Systematic Evaluation.” Am J Epidemiol 191 (12): 2084–97.
+:::
+
+
+## Goals of data analysis 
+
+
+:::: columns 
+
+::: {.column .fragment}
+### description 
+
+:::
+
+::: {.column .fragment}
+
+### prediction 
+
+:::
+
+::: {.column .fragment}
+
+### causal inference 
+:::
+
+::::
+
+## Goals of data analysis 
+
+
+:::: columns 
+
+::: {.column}
+### description 
+
+:::
+
+::: {.column .light}
+
+### prediction 
+
+:::
+
+::: {.column .light}
+
+### causal inference 
+:::
+
+::::
+
+## Goals of data analysis 
+
+:::: columns 
+
+::: {.column}
+### description 
+
+*What* phenomena occur / occurred in the past?
+
+- What is the prevalence of diabetes in the United States?
+- What are the demographics of our customers?
+:::
+
+::: {.column .light}
+
+### prediction 
+
+:::
+
+::: {.column .light}
+
+### causal inference 
+:::
+
+::::
+
+## Goals of data analysis 
+
+:::: columns 
+
+::: {.column}
+### description 
+
+*What* phenomena occur / occurred in the past?
+
+
+*Validity concerns*: Measurement error, sampling error
+
+::: {.fragment}
+*Connection to causal inference*: Understanding population characteristics, examining outcome distributions, checking if data structure matches research question
+
+:::
+
+:::
+
+::: {.column .light}
+
+### prediction 
+
+:::
+
+::: {.column .light}
+
+### causal inference 
+:::
+
+::::
+
+## Goals of data analysis 
+
+:::: columns 
+
+::: {.column}
+### description 
+
+*What* phenomena occur / occurred in the past?
+
+*Validity concerns*: Measurement error, sampling error
+
+*Connection to causal inference*: Understanding population characteristics, examining outcome distributions, checking if data structure matches research question
+
+
+:::
+
+::: {.column}
+
+### prediction 
+
+*Whether* a certain phenomena will occur given a set of circumstances
+
+::: {.fragment}
+*Validity concerns*: Predictive accuracy, measurement error
+:::
+
+::: {.fragment}
+*Connection to causal inference*: Some techniques use model predictions to answer causal questions
+:::
+:::
+
+::: {.column .light}
+
+### causal inference 
+:::
+
+::::
+
+
+## Goals of data analysis 
+
+:::: columns 
+
+::: {.column}
+### description 
+
+*What* phenomena occur / occurred in the past?
+
+*Validity concerns*: Measurement error, sampling error
+
+*Connection to causal inference*: Understanding population characteristics, examining outcome distributions, checking if data structure matches research question
+
+
+:::
+
+::: {.column}
+
+### prediction 
+
+*Whether* a certain phenomena will occur given a set of circumstances
+
+*Validity concerns*: Predictive accuracy, measurement error
+
+*Connection to causal inference*: Some techniques use model predictions to answer causal questions
+
+:::
+
+::: {.column}
+
+### causal inference 
+
+*Why* does a phenomena occur
+
+::: {.fragment}
+*Validity concerns*: Lots of assumptions (many that cannot be checked, coming soon!)
+:::
+
+
+:::
+
+::::
+
+
+## Why Prediction ≠ Causation
+
+Predictive power **doesn't guarantee causal accuracy**, especially when:
+
+- The outcome has many causes but the model focuses on one exposure
+- The true causal effect is small
+- The model excludes non-causal predictors for methodological reasons
+
+
+
+## The Ice Cream & Crime Example
+
+
+::: small
+- You have ice cream sales data but no weather data
+- Ice cream sales correlate with crime rates and can predict them moderately well -- suppose this correlation exists because both variables are caused by weather!
+:::
+
+::: fragment
+**Variables that are invalid from a causal perspective (like ice cream sales) can still provide predictive power by acting as proxies for true causal factors (like weather)**
+:::
+
+#  The first step is asking a good causal question {background-color="#533146"} 
+
+## Diagramming causal claims
+
+
+![](https://www.r-causal.org/images/sentence-diagram-1.png)
+
+## Smoking causes lung cancer
+
+![](https://www.r-causal.org/images/sentence-diagram-2.png)
+
+
+# Let's try to get more specific {background-color="#533146"}
+
+---
+
+![](images/smoking-jama-1.jpg)
+
+---
+
+![](https://www.r-causal.org/images/sentence-diagram-2.png)
+
+
+---
+
+![](images/smoking-jama-2.png)
+
+---
+
+![](https://www.r-causal.org/images/sentence-diagram-3.png)
+
+
+
+## Target Trial
+
+
+![](https://www.r-causal.org/images/sentence-diagram-4.png)
+
+
+## Asking good causal questions
+
+:::: columns
+
+::: column
+
+### **The claim** 
+
+
+:::
+
+::: column
+
+### **The evidence** 
+
+
+:::
+
+::::
+
+## Asking good causal questions
+
+:::: columns
+
+::: column
+
+### **The claim** 
+
+
+Smoking causes lung cancer
+
+:::
+
+::: column
+
+### **The evidence** 
+
+For people who smoking 15+cigarettes a day, reducing smoking by 50% reduces the risk of lung cancer over 5-10 years
+
+:::
+
+::::
+
+## Asking good causal questions
+
+:::: columns
+
+::: column
+
+### **The question** 
+
+
+Does smoking causes lung cancer?
+
+:::
+
+::: column
+
+### **The evidence** 
+
+For people who smoking 15+cigarettes a day, reducing smoking by 50% reduces the risk of lung cancer over 5-10 years
+
+:::
+
+::::
+
+## Asking good causal questions
+
+:::: columns
+
+::: column
+
+### **The question** 
+
+
+For people who smoke 15+ cigarettes a day, does reducing smoking by 50% reduce the lung cancer risk over 5-10 years?
+
+:::
+
+::: column
+
+### **The evidence** 
+
+For people who smoking 15+cigarettes a day, reducing smoking by 50% reduces the risk of lung cancer over 5-10 years
+
+:::
+
+::::
+
+## `r fontawesome::fa("laptop")` Application Exercise 
+
+<br> <br>
+
+### [bit.ly/sta-779-f23-ae3](bit.ly/sta-779-f23-ae3)
