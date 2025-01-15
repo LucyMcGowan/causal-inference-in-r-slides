@@ -1,8 +1,29 @@
 ---
 title: "The Whole Game"
 author: "Lucy D'Agostino McGowan"
-format: kakashi-revealjs
+format:
+  revealjs: 
+    theme: custom.scss
+    incremental: true
+    title-slide-attributes:
+      data-background-color: "#533146"
+      data-color: "#EDEEF"
+    slide-number: c/t
+    show-slide-number: all
+    menu: false
 footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
+execute: 
+  echo: true
+  warning: false
+  message: false
+  dev: "ragg_png"
+  dpi: 320
+  out.width: "80%"
+  fig.width: 6
+  fig.asp: 0.618
+  fig.retina: 2
+  fig.align: "center"
+  fig.show: "hold"
 ---
 
 
@@ -163,12 +184,14 @@ We are using data that was simulated by [Dr. Andrew Heiss](https://evalsp21.clas
 
 ## The Data
 
+::: small
 ```{r}
 #| eval: false
 library(causalworkshop)
 library(skimr)
 skim(net_data)
 ```
+:::
 
 ::: small
 ```{r}
@@ -199,7 +222,7 @@ skimmed[c(2, 5, 6, 12)] |>
 
 ### **draw your assumptions**
 
-## 
+---
 
 ```{r}
 #| echo: false
@@ -279,11 +302,12 @@ mosquito_dag |>
 ### What do I need to control for?
 
 
-##
+---
 
 ```{r}
 #| echo: false
 #| fig.width: 15
+#| fig.height: 10
 library(ggokabeito)
 glyph <- function(data, params, size) {
   data$shape <- 15
@@ -366,7 +390,7 @@ mosquito_dag |>
   )
 ```
 
-## Multivariable regression: what's the association?
+## Multivariable regression: what's the association? {.small}
 
 ```{r}
 #| code-line-numbers: "|1-8"
@@ -510,7 +534,7 @@ ipw_estimate <- net_data_wts |>
 ipw_estimate
 ```
 
-## Let's fix our confidence intervals with robust SEs!
+## Let's fix our confidence intervals (robust SEs)!
 
 . . .
 
@@ -531,7 +555,7 @@ ipw_estimate_robust <- ipw_model_robust |>
 
 ------------------------------------------------------------------------
 
-## Let's fix our confidence intervals with robust SEs!
+## Let's fix our confidence intervals (robust SEs)!
 
 ```{r}
 as_tibble(ipw_estimate_robust)
@@ -539,7 +563,7 @@ as_tibble(ipw_estimate_robust)
 
 ------------------------------------------------------------------------
 
-## Let's fix our confidence intervals with the bootstrap!
+## Let's fix our confidence intervals (bootstrap)!
 
 . . .
 
@@ -579,7 +603,7 @@ fit_ipw <- function(split, ...) {
 }
 ```
 
-## Using {rsample} to bootstrap our causal effect
+## Using {rsample}
 
 . . .
 
