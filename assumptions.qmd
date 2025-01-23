@@ -1,12 +1,11 @@
 ---
 title: "Assumptions in Causal Inference"
 author: "Lucy D'Agostino McGowan"
-format: kakashi-revealjs
-footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
+format: revealjs
 ---
 
 
-## {background-color="#23373B" .center}
+## {background-color="#533146" .center}
 
 1. **Consistency** 
 2. **Exchangeability**
