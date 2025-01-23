@@ -8,7 +8,7 @@
 <link href="estimating-counterfactuals_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="estimating-counterfactuals_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="estimating-counterfactuals_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.298">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Lucy D’Agostino McGowan">
   <title>Estimating counterfactuals</title>
@@ -29,6 +29,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="estimating-counterfactuals_files/libs/revealjs/dist/theme/quarto.css">
   <link href="estimating-counterfactuals_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -328,7 +393,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-color="#23373B" data-color="#EDEEF" class="quarto-title-block center">
+<section id="title-slide" data-background-color="#533146" data-color="#EDEEF" class="quarto-title-block center">
   <h1 class="title">Estimating counterfactuals</h1>
 
 <div class="quarto-title-authors">
@@ -339,6 +404,25 @@ Lucy D’Agostino McGowan
 </div>
 </div>
 
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/two-roads.jpeg"></p>
+<figcaption><em>Image generated with Gemini</em></figcaption>
+</figure>
+</div>
+</div><div class="column">
+<p>Two roads diverged in a yellow wood,<br>
+And sorry I could not travel both<br>
+And be one traveler, long I stood<br>
+And looked down one as far as I could<br>
+To where it bent in the undergrowth<br>
+<em>— Robert Frost</em></p>
+</div></div>
 </section>
 <section id="potential-outcomes" class="slide level2">
 <h2>Potential outcomes</h2>
@@ -409,50 +493,44 @@ Lucy D’Agostino McGowan
 </figure>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="ice-t-and-spike-1" class="slide level2">
 <h2>Ice-T and Spike</h2>
-<div id="tbl-causal-map" class="tbl-parent quarto-layout-panel">
-<div class="panel-caption table-caption">
-<p>Ice-T and Spike Causal Map</p>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" data-reveal="true" style="flex-basis: 100.0%;justify-content: center;">
+<div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
+<p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  A{Ice-T} --&gt; |observed| B(Abandons criminal life)
-  A -.-&gt; |missing counterfactual| C(Does one more heist)
-  C -.-&gt; D[35 years in prison]
-  B --&gt; E[Fame &amp; Fortune]
-  
-  classDef grey fill:#ddd
-  class D,C grey
+A{Ice-T} --&gt; |observed| B(Abandons criminal life)
+A -.-&gt; |missing counterfactual| C(Does one more heist)
+C -.-&gt; D[35 years in prison]
+B --&gt; E[Fame &amp; Fortune]
+
+classDef grey fill:#fff
+class D,C grey
 </pre>
 </div>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" data-reveal="true" style="flex-basis: 100.0%;justify-content: center;">
+<div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>
+<p></p><figure class=""><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-  A{Spike} -.-&gt; |missing counterfactual| B(Abandons criminal life)
-  A --&gt; |observed| C(Does one more heist)
-  C --&gt; D[35 years in prison]
-  B -.-&gt; E[Fame &amp; Fortune]
-  classDef grey fill:#ddd
-  class E,B grey
+A{Spike} -.-&gt; |missing counterfactual| B(Abandons criminal life)
+A --&gt; |observed| C(Does one more heist)
+C --&gt; D[35 years in prison]
+B -.-&gt; E[Fame &amp; Fortune]
+classDef grey fill:#fff
+class E,B grey
 </pre>
 </div>
-</div>
-</div>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
@@ -473,10 +551,1213 @@ Lucy D’Agostino McGowan
 <li class="fragment">We must rely on statistical techniques to help construct these unobservable counterfactuals</li>
 </ul>
 </div>
+</section>
+<section>
+<section id="does-chocolate-ice-cream-make-you-happier-than-vanilla" class="title-slide slide level1 center" data-background-color="#533146">
+<h1>Does chocolate ice cream make you happier than vanilla?</h1>
+
+</section>
+<section id="happiness-simulation" class="slide level2">
+<h2>Happiness Simulation</h2>
+<ul>
+<li class="fragment">Some <strong>happiness index</strong> exists that ranges from 1-10</li>
+<li class="fragment">We want to assess whether eating <strong>chocolate ice cream</strong> versus <em>vanilla</em> will increase happiness</li>
+</ul>
+</section>
+<section id="happiness-simulation-1" class="slide level2">
+<h2>Happiness Simulation (🔮)</h2>
+<div class="box fragment small">
+<p>What is the average causal effect?</p>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-2"><a href=""></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb1-3"><a href=""></a>  <span class="at">y_chocolate =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">6</span>),</span>
+<span id="cb1-4"><a href=""></a>  <span class="at">y_vanilla =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb1-5"><a href=""></a>)</span>
+<span id="cb1-6"><a href=""></a></span>
+<span id="cb1-7"><a href=""></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">causal_effect =</span> <span class="st">" "</span>)</span>
+<span id="cb1-9"><a href=""></a></span>
+<span id="cb1-10"><a href=""></a>data <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href=""></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-12"><a href=""></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb1-13"><a href=""></a>    <span class="at">id =</span> <span class="st">"ID"</span>,</span>
+<span id="cb1-14"><a href=""></a>    <span class="at">y_chocolate =</span> <span class="fu">md</span>(<span class="st">"$Y_{</span><span class="sc">\\</span><span class="st">text{id}}(</span><span class="sc">\\</span><span class="st">text{chocolate})$"</span>),</span>
+<span id="cb1-15"><a href=""></a>    <span class="at">y_vanilla =</span> <span class="fu">md</span>(<span class="st">"$Y_{</span><span class="sc">\\</span><span class="st">text{id}}(</span><span class="sc">\\</span><span class="st">text{vanilla})$"</span>),</span>
+<span id="cb1-16"><a href=""></a>    <span class="at">causal_effect =</span> <span class="fu">md</span>(<span class="st">"$Y_{</span><span class="sc">\\</span><span class="st">text{id}}(</span><span class="sc">\\</span><span class="st">text{chocolate}) - Y_{</span><span class="sc">\\</span><span class="st">text{id}}(</span><span class="sc">\\</span><span class="st">text{vanilla})$"</span>)</span>
+<span id="cb1-17"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-18"><a href=""></a>  <span class="fu">fmt_markdown</span>(</span>
+<span id="cb1-19"><a href=""></a>    <span class="at">columns =</span> <span class="fu">c</span>(y_chocolate, y_vanilla, causal_effect)</span>
+<span id="cb1-20"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-21"><a href=""></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb1-22"><a href=""></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Potential Outcomes and Causal Effect**"</span>)</span>
+<span id="cb1-23"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-24"><a href=""></a>  <span class="fu">tab_spanner</span>(</span>
+<span id="cb1-25"><a href=""></a>    <span class="at">label =</span> <span class="st">"Potential Outcomes"</span>,</span>
+<span id="cb1-26"><a href=""></a>    <span class="at">columns =</span> <span class="fu">c</span>(y_chocolate, y_vanilla)</span>
+<span id="cb1-27"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-28"><a href=""></a>  <span class="fu">tab_spanner</span>(</span>
+<span id="cb1-29"><a href=""></a>    <span class="at">label =</span> <span class="st">"Causal Effect"</span>,</span>
+<span id="cb1-30"><a href=""></a>    <span class="at">columns =</span> causal_effect</span>
+<span id="cb1-31"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="nxggkgmoca" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nxggkgmoca table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#nxggkgmoca thead, #nxggkgmoca tbody, #nxggkgmoca tfoot, #nxggkgmoca tr, #nxggkgmoca td, #nxggkgmoca th {
+  border-style: none;
+}
+
+#nxggkgmoca p {
+  margin: 0;
+  padding: 0;
+}
+
+#nxggkgmoca .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nxggkgmoca .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nxggkgmoca .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nxggkgmoca .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nxggkgmoca .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nxggkgmoca .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nxggkgmoca .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nxggkgmoca .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nxggkgmoca .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#nxggkgmoca .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nxggkgmoca .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nxggkgmoca .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nxggkgmoca .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nxggkgmoca .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nxggkgmoca .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nxggkgmoca .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nxggkgmoca .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nxggkgmoca .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#nxggkgmoca .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nxggkgmoca .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nxggkgmoca .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nxggkgmoca .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nxggkgmoca .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nxggkgmoca .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nxggkgmoca .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nxggkgmoca .gt_left {
+  text-align: left;
+}
+
+#nxggkgmoca .gt_center {
+  text-align: center;
+}
+
+#nxggkgmoca .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nxggkgmoca .gt_font_normal {
+  font-weight: normal;
+}
+
+#nxggkgmoca .gt_font_bold {
+  font-weight: bold;
+}
+
+#nxggkgmoca .gt_font_italic {
+  font-style: italic;
+}
+
+#nxggkgmoca .gt_super {
+  font-size: 65%;
+}
+
+#nxggkgmoca .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#nxggkgmoca .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nxggkgmoca .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nxggkgmoca .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nxggkgmoca .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nxggkgmoca .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nxggkgmoca .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header gt_heading">
+<th colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border"><strong>Potential Outcomes and Causal Effect</strong></th>
+</tr>
+<tr class="odd gt_col_headings gt_spanner_row">
+<th rowspan="2" id="ID" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">ID</th>
+<th colspan="2" id="Potential Outcomes" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup"><span class="gt_column_spanner">Potential Outcomes</span></th>
+<th id="Causal Effect" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="col"><span class="gt_column_spanner">Causal Effect</span></th>
+</tr>
+<tr class="header gt_col_headings">
+<th id="\(Y_{\text{id}}(\text{chocolate})\)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">\(Y_{\text{id}}(\text{chocolate})\)</th>
+<th id="\(Y_{\text{id}}(\text{vanilla})\)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">\(Y_{\text{id}}(\text{vanilla})\)</th>
+<th id="\(Y_{\text{id}}(\text{chocolate}) - Y_{\text{id}}(\text{vanilla})\)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">\(Y_{\text{id}}(\text{chocolate}) - Y_{\text{id}}(\text{vanilla})\)</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">1</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>4</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>1</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">2</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>4</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>3</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">3</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>6</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>4</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">4</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>5</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>5</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">5</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>6</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>5</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">6</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>5</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>6</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">7</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>6</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>8</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">8</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>7</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>6</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">9</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>5</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>3</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">10</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>6</p></td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>5</p></td>
+<td class="gt_row gt_right" headers="causal_effect"></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="happiness-simulation-2" class="slide level2">
+<h2>Happiness Simulation 🌫</h2>
+<div class="box fragment small">
+<p>What is the average causal effect?</p>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="do">## we are doing something *random* so let's</span></span>
+<span id="cb2-2"><a href=""></a><span class="do">## set a seed so we always observe the</span></span>
+<span id="cb2-3"><a href=""></a><span class="do">## same result each time we run the code</span></span>
+<span id="cb2-4"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
+<span id="cb2-5"><a href=""></a>data_observed <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-7"><a href=""></a>    <span class="co"># change the exposure to randomized, generated from</span></span>
+<span id="cb2-8"><a href=""></a>    <span class="co"># a binomial distribution with a probability of 0.5 for</span></span>
+<span id="cb2-9"><a href=""></a>    <span class="co"># being in either group</span></span>
+<span id="cb2-10"><a href=""></a>    <span class="at">exposure =</span> <span class="fu">if_else</span>(</span>
+<span id="cb2-11"><a href=""></a>      <span class="fu">rbinom</span>(<span class="fu">n</span>(), <span class="dv">1</span>, <span class="fl">0.5</span>) <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"chocolate"</span>, <span class="st">"vanilla"</span></span>
+<span id="cb2-12"><a href=""></a>    ),</span>
+<span id="cb2-13"><a href=""></a>    <span class="at">observed_outcome =</span> <span class="fu">case_when</span>(</span>
+<span id="cb2-14"><a href=""></a>      exposure <span class="sc">==</span> <span class="st">"chocolate"</span> <span class="sc">~</span> y_chocolate,</span>
+<span id="cb2-15"><a href=""></a>      exposure <span class="sc">==</span> <span class="st">"vanilla"</span> <span class="sc">~</span> y_vanilla</span>
+<span id="cb2-16"><a href=""></a>    )</span>
+<span id="cb2-17"><a href=""></a>  )</span>
+<span id="cb2-18"><a href=""></a></span>
+<span id="cb2-19"><a href=""></a>avg_chocolate <span class="ot">&lt;-</span> data_observed <span class="sc">|&gt;</span></span>
+<span id="cb2-20"><a href=""></a>  <span class="fu">filter</span>(exposure <span class="sc">==</span> <span class="st">"chocolate"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-21"><a href=""></a>  <span class="fu">pull</span>(observed_outcome) <span class="sc">|&gt;</span></span>
+<span id="cb2-22"><a href=""></a>  <span class="fu">mean</span>()</span>
+<span id="cb2-23"><a href=""></a></span>
+<span id="cb2-24"><a href=""></a>avg_vanilla <span class="ot">&lt;-</span> data_observed <span class="sc">|&gt;</span></span>
+<span id="cb2-25"><a href=""></a>  <span class="fu">filter</span>(exposure <span class="sc">==</span> <span class="st">"vanilla"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-26"><a href=""></a>  <span class="fu">pull</span>(observed_outcome) <span class="sc">|&gt;</span></span>
+<span id="cb2-27"><a href=""></a>  <span class="fu">mean</span>()</span>
+<span id="cb2-28"><a href=""></a></span>
+<span id="cb2-29"><a href=""></a>data_observed <span class="sc">|&gt;</span></span>
+<span id="cb2-30"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-31"><a href=""></a>    <span class="at">y_chocolate =</span> <span class="fu">if_else</span>(exposure <span class="sc">==</span> <span class="st">"chocolate"</span>, y_chocolate, <span class="cn">NA</span>),</span>
+<span id="cb2-32"><a href=""></a>    <span class="at">y_vanilla =</span> <span class="fu">if_else</span>(exposure <span class="sc">==</span> <span class="st">"vanilla"</span>, y_vanilla, <span class="cn">NA</span>),</span>
+<span id="cb2-33"><a href=""></a>    <span class="at">causal_effect =</span> <span class="cn">NA_real_</span></span>
+<span id="cb2-34"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-35"><a href=""></a>  <span class="fu">select</span>(<span class="sc">-</span>observed_outcome, <span class="sc">-</span>exposure) <span class="sc">|&gt;</span></span>
+<span id="cb2-36"><a href=""></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-37"><a href=""></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb2-38"><a href=""></a>    <span class="at">id =</span> <span class="st">"ID"</span>,</span>
+<span id="cb2-39"><a href=""></a>    <span class="at">y_chocolate =</span> <span class="fu">md</span>(<span class="st">"$Y_{</span><span class="sc">\\</span><span class="st">text{id}}(</span><span class="sc">\\</span><span class="st">text{chocolate})$"</span>),</span>
+<span id="cb2-40"><a href=""></a>    <span class="at">y_vanilla =</span> <span class="fu">md</span>(<span class="st">"$Y_{</span><span class="sc">\\</span><span class="st">text{id}}(</span><span class="sc">\\</span><span class="st">text{vanilla})$"</span>),</span>
+<span id="cb2-41"><a href=""></a>    <span class="at">causal_effect =</span> <span class="fu">md</span>(<span class="st">"$Y_{</span><span class="sc">\\</span><span class="st">text{id}}(</span><span class="sc">\\</span><span class="st">text{chocolate}) - Y_{</span><span class="sc">\\</span><span class="st">text{id}}(</span><span class="sc">\\</span><span class="st">text{vanilla})$"</span>)</span>
+<span id="cb2-42"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-43"><a href=""></a>  <span class="fu">fmt_markdown</span>(<span class="at">columns =</span> <span class="fu">c</span>(y_chocolate, y_vanilla, causal_effect)) <span class="sc">|&gt;</span></span>
+<span id="cb2-44"><a href=""></a>  <span class="fu">sub_missing</span>(</span>
+<span id="cb2-45"><a href=""></a>    <span class="at">columns =</span> <span class="fu">c</span>(y_chocolate, y_vanilla, causal_effect),</span>
+<span id="cb2-46"><a href=""></a>    <span class="at">missing_text =</span> <span class="fu">md</span>(<span class="st">"---"</span>) <span class="co"># Format missing values as blank</span></span>
+<span id="cb2-47"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-48"><a href=""></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb2-49"><a href=""></a>    <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Potential Outcomes and Hidden Causal Effect**"</span>)</span>
+<span id="cb2-50"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-51"><a href=""></a>  <span class="fu">tab_spanner</span>(</span>
+<span id="cb2-52"><a href=""></a>    <span class="at">label =</span> <span class="st">"Potential Outcomes"</span>,</span>
+<span id="cb2-53"><a href=""></a>    <span class="at">columns =</span> <span class="fu">c</span>(y_chocolate, y_vanilla)</span>
+<span id="cb2-54"><a href=""></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-55"><a href=""></a>  <span class="fu">tab_spanner</span>(</span>
+<span id="cb2-56"><a href=""></a>    <span class="at">label =</span> <span class="st">"Causal Effect"</span>,</span>
+<span id="cb2-57"><a href=""></a>    <span class="at">columns =</span> causal_effect</span>
+<span id="cb2-58"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="uvguckgmbq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uvguckgmbq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#uvguckgmbq thead, #uvguckgmbq tbody, #uvguckgmbq tfoot, #uvguckgmbq tr, #uvguckgmbq td, #uvguckgmbq th {
+  border-style: none;
+}
+
+#uvguckgmbq p {
+  margin: 0;
+  padding: 0;
+}
+
+#uvguckgmbq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#uvguckgmbq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#uvguckgmbq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#uvguckgmbq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#uvguckgmbq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#uvguckgmbq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#uvguckgmbq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#uvguckgmbq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#uvguckgmbq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#uvguckgmbq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#uvguckgmbq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#uvguckgmbq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#uvguckgmbq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#uvguckgmbq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#uvguckgmbq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uvguckgmbq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#uvguckgmbq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#uvguckgmbq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#uvguckgmbq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uvguckgmbq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#uvguckgmbq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uvguckgmbq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#uvguckgmbq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uvguckgmbq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#uvguckgmbq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uvguckgmbq .gt_left {
+  text-align: left;
+}
+
+#uvguckgmbq .gt_center {
+  text-align: center;
+}
+
+#uvguckgmbq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#uvguckgmbq .gt_font_normal {
+  font-weight: normal;
+}
+
+#uvguckgmbq .gt_font_bold {
+  font-weight: bold;
+}
+
+#uvguckgmbq .gt_font_italic {
+  font-style: italic;
+}
+
+#uvguckgmbq .gt_super {
+  font-size: 65%;
+}
+
+#uvguckgmbq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#uvguckgmbq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#uvguckgmbq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#uvguckgmbq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#uvguckgmbq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#uvguckgmbq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#uvguckgmbq .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header gt_heading">
+<th colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border"><strong>Potential Outcomes and Hidden Causal Effect</strong></th>
+</tr>
+<tr class="odd gt_col_headings gt_spanner_row">
+<th rowspan="2" id="ID" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">ID</th>
+<th colspan="2" id="Potential Outcomes" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup"><span class="gt_column_spanner">Potential Outcomes</span></th>
+<th id="Causal Effect" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="col"><span class="gt_column_spanner">Causal Effect</span></th>
+</tr>
+<tr class="header gt_col_headings">
+<th id="\(Y_{\text{id}}(\text{chocolate})\)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">\(Y_{\text{id}}(\text{chocolate})\)</th>
+<th id="\(Y_{\text{id}}(\text{vanilla})\)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">\(Y_{\text{id}}(\text{vanilla})\)</th>
+<th id="\(Y_{\text{id}}(\text{chocolate}) - Y_{\text{id}}(\text{vanilla})\)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">\(Y_{\text{id}}(\text{chocolate}) - Y_{\text{id}}(\text{vanilla})\)</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">1</td>
+<td class="gt_row gt_right" headers="y_chocolate">—</td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>1</p></td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">2</td>
+<td class="gt_row gt_right" headers="y_chocolate">—</td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>3</p></td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">3</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>6</p></td>
+<td class="gt_row gt_right" headers="y_vanilla">—</td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">4</td>
+<td class="gt_row gt_right" headers="y_chocolate">—</td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>5</p></td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">5</td>
+<td class="gt_row gt_right" headers="y_chocolate">—</td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>5</p></td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">6</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>5</p></td>
+<td class="gt_row gt_right" headers="y_vanilla">—</td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">7</td>
+<td class="gt_row gt_right" headers="y_chocolate">—</td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>8</p></td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">8</td>
+<td class="gt_row gt_right" headers="y_chocolate">—</td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>6</p></td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="id">9</td>
+<td class="gt_row gt_right" headers="y_chocolate"><p>5</p></td>
+<td class="gt_row gt_right" headers="y_vanilla">—</td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="id">10</td>
+<td class="gt_row gt_right" headers="y_chocolate">—</td>
+<td class="gt_row gt_right" headers="y_vanilla"><p>5</p></td>
+<td class="gt_row gt_right" headers="causal_effect">—</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="happiness-simulation-3" class="slide level2">
+<h2>Happiness Simulation 🕵️‍♀️</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>data_observed <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href=""></a>  <span class="fu">group_by</span>(exposure) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href=""></a>  <span class="fu">summarise</span>(<span class="at">avg_outcome =</span> <span class="fu">mean</span>(observed_outcome))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  exposure  avg_outcome
+  &lt;chr&gt;           &lt;dbl&gt;
+1 chocolate        5.33
+2 vanilla          4.71</code></pre>
+</div>
+</div>
+<div class="box">
+<p>Why did that (approximately) work?</p>
+</div>
+<div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 <p>Slides by <a href="https://lucymcgowan.com">Dr.&nbsp;Lucy D’Agostino McGowan</a></p>
 </div>
-</section>
+</div>
+</section></section>
     </div>
   </div>
 
@@ -630,17 +1911,17 @@ Lucy D’Agostino McGowan
         hideCursorTime: 5000,
 
         // Opens links in an iframe preview overlay
-        previewLinks: true,
+        previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'fade',
+        transition: 'none',
 
         // Transition speed (default/fast/slow)
-        transitionSpeed: 'fast',
+        transitionSpeed: 'default',
 
         // Transition style for full page slide backgrounds
         // (none/fade/slide/convex/concave/zoom)
-        backgroundTransition: 'fade',
+        backgroundTransition: 'none',
 
         // Number of slides away from the current that are visible
         viewDistance: 3,
@@ -757,18 +2038,7 @@ Lucy D’Agostino McGowan
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -800,7 +2070,47 @@ Lucy D’Agostino McGowan
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
       function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
@@ -837,7 +2147,11 @@ Lucy D’Agostino McGowan
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

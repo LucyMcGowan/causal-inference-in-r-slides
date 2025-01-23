@@ -139,6 +139,9 @@ $selection-color: $body-color !default;
   font-weight: bold;
 }
 
+.code-fold {
+  font-size: 15px;
+}
 .quarto-title-authors {
   color: $gray-lucy;
   font-size: 64px;
@@ -395,11 +398,11 @@ ol li::before {
   margin: 0em auto;
   overflow: hidden;
   padding: 0.1em 0.4em;
-  font-weight: 600;
+  font-weight: 300;
   display: table;
   text-align: center;
-  background-color: $yellow;
-  color: $gray-800 !important;
+  background-color: $orange;
+  color: $gray-200 !important;
 }
 
 img {

@@ -1,29 +1,7 @@
 ---
 title: "The Whole Game"
 author: "Lucy D'Agostino McGowan"
-format:
-  revealjs: 
-    theme: custom.scss
-    incremental: true
-    title-slide-attributes:
-      data-background-color: "#533146"
-      data-color: "#EDEEF"
-    slide-number: c/t
-    show-slide-number: all
-    menu: false
-footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
-execute: 
-  echo: true
-  warning: false
-  message: false
-  dev: "ragg_png"
-  dpi: 320
-  out.width: "80%"
-  fig.width: 6
-  fig.asp: 0.618
-  fig.retina: 2
-  fig.align: "center"
-  fig.show: "hold"
+format: revealjs
 ---
 
 
@@ -616,7 +594,7 @@ ipw_results <- bootstraps(net_data_wts, 1000, apparent = TRUE) |>
   mutate(results = map(splits, fit_ipw)) 
 ```
 
-## Using {rsample} to bootstrap our causal effect
+## Using {rsample} 
 
 ```{r}
 #| code-line-numbers: "|2"

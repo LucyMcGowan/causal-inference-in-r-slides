@@ -1,10 +1,25 @@
 ---
 title: "Estimating counterfactuals"
 author: "Lucy D'Agostino McGowan"
-format: kakashi-revealjs
-footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
+format: revealjs
 ---
 
+
+:::: columns
+
+::: column
+![*Image generated with Gemini*](images/two-roads.jpeg)
+:::
+
+::: column
+Two roads diverged in a yellow wood,  
+And sorry I could not travel both  
+And be one traveler, long I stood  
+And looked down one as far as I could  
+To where it bent in the undergrowth  
+*— Robert Frost*
+:::
+::::
 
 ## Potential outcomes
 
@@ -17,6 +32,8 @@ options(
   tibble.max_extra_cols = 6, 
   tibble.width = 60
 )
+
+library(gt)
 
 ```
 
@@ -73,33 +90,31 @@ Award-winning actor, rapper, and producer Ice-T unveils a compelling memoir of h
 
 ## Ice-T and Spike
 
-::: {#tbl-causal-map layout-ncol=1}
 
 ```{mermaid}
 %%| echo: false
 flowchart LR
-  A{Ice-T} --> |observed| B(Abandons criminal life)
-  A -.-> |missing counterfactual| C(Does one more heist)
-  C -.-> D[35 years in prison]
-  B --> E[Fame & Fortune]
-  
-  classDef grey fill:#ddd
-  class D,C grey
+A{Ice-T} --> |observed| B(Abandons criminal life)
+A -.-> |missing counterfactual| C(Does one more heist)
+C -.-> D[35 years in prison]
+B --> E[Fame & Fortune]
+
+classDef grey fill:#fff
+class D,C grey
 ```
 
 ```{mermaid}
 %%| echo: false
 flowchart LR
-  A{Spike} -.-> |missing counterfactual| B(Abandons criminal life)
-  A --> |observed| C(Does one more heist)
-  C --> D[35 years in prison]
-  B -.-> E[Fame & Fortune]
-  classDef grey fill:#ddd
-  class E,B grey
+A{Spike} -.-> |missing counterfactual| B(Abandons criminal life)
+A --> |observed| C(Does one more heist)
+C --> D[35 years in prison]
+B -.-> E[Fame & Fortune]
+classDef grey fill:#fff
+class E,B grey
 ```
 
-Ice-T and Spike Causal Map
-:::
+
 
 ## Ice-T and Spike
 
@@ -113,4 +128,134 @@ Ice-T and Spike Causal Map
 * We could conduct an experiment where we *randomize* many individuals to leave criminal life (or not) and see how this impacts their outcomes *on average* 
 * This randomized trial seems to present some ethical issues, perhaps we need to look to *observational* studies to help answer this question
 * We must rely on statistical techniques to help construct these unobservable counterfactuals
+:::
+
+# Does chocolate ice cream make you happier than vanilla? {background-color="#533146"}
+
+## Happiness Simulation
+
+- Some **happiness index** exists that ranges from 1-10
+- We want to assess whether eating **chocolate ice cream** versus *vanilla* will increase happiness 
+
+## Happiness Simulation (🔮)
+
+::: {.box .fragment .small}
+What is the average causal effect?
+:::
+
+
+```{r}
+#| code-fold: true
+data <- tibble(
+  id = 1:10,
+  y_chocolate = c(4, 4, 6, 5, 6, 5, 6, 7, 5, 6),
+  y_vanilla = c(1, 3, 4, 5, 5, 6, 8, 6, 3, 5)
+)
+
+data <- data |>
+  mutate(causal_effect = " ")
+
+data |>
+  gt() |>
+  cols_label(
+    id = "ID",
+    y_chocolate = md("$Y_{\\text{id}}(\\text{chocolate})$"),
+    y_vanilla = md("$Y_{\\text{id}}(\\text{vanilla})$"),
+    causal_effect = md("$Y_{\\text{id}}(\\text{chocolate}) - Y_{\\text{id}}(\\text{vanilla})$")
+  ) |>
+  fmt_markdown(
+    columns = c(y_chocolate, y_vanilla, causal_effect)
+  ) |>
+  tab_header(
+    title = md("**Potential Outcomes and Causal Effect**")
+  ) |>
+  tab_spanner(
+    label = "Potential Outcomes",
+    columns = c(y_chocolate, y_vanilla)
+  ) |>
+  tab_spanner(
+    label = "Causal Effect",
+    columns = causal_effect
+  )
+```
+
+## Happiness Simulation 🌫
+
+::: {.box .fragment .small}
+What is the average causal effect?
+:::
+
+
+```{r}
+#| code-fold: true
+## we are doing something *random* so let's
+## set a seed so we always observe the
+## same result each time we run the code
+set.seed(11)
+data_observed <- data |>
+  mutate(
+    # change the exposure to randomized, generated from
+    # a binomial distribution with a probability of 0.5 for
+    # being in either group
+    exposure = if_else(
+      rbinom(n(), 1, 0.5) == 1, "chocolate", "vanilla"
+    ),
+    observed_outcome = case_when(
+      exposure == "chocolate" ~ y_chocolate,
+      exposure == "vanilla" ~ y_vanilla
+    )
+  )
+
+avg_chocolate <- data_observed |>
+  filter(exposure == "chocolate") |>
+  pull(observed_outcome) |>
+  mean()
+
+avg_vanilla <- data_observed |>
+  filter(exposure == "vanilla") |>
+  pull(observed_outcome) |>
+  mean()
+
+data_observed |>
+  mutate(
+    y_chocolate = if_else(exposure == "chocolate", y_chocolate, NA),
+    y_vanilla = if_else(exposure == "vanilla", y_vanilla, NA),
+    causal_effect = NA_real_
+  ) |>
+  select(-observed_outcome, -exposure) |>
+  gt() |>
+  cols_label(
+    id = "ID",
+    y_chocolate = md("$Y_{\\text{id}}(\\text{chocolate})$"),
+    y_vanilla = md("$Y_{\\text{id}}(\\text{vanilla})$"),
+    causal_effect = md("$Y_{\\text{id}}(\\text{chocolate}) - Y_{\\text{id}}(\\text{vanilla})$")
+  ) |>
+  fmt_markdown(columns = c(y_chocolate, y_vanilla, causal_effect)) |>
+  sub_missing(
+    columns = c(y_chocolate, y_vanilla, causal_effect),
+    missing_text = md("---") # Format missing values as blank
+  ) |>
+  tab_header(
+    title = md("**Potential Outcomes and Hidden Causal Effect**")
+  ) |>
+  tab_spanner(
+    label = "Potential Outcomes",
+    columns = c(y_chocolate, y_vanilla)
+  ) |>
+  tab_spanner(
+    label = "Causal Effect",
+    columns = causal_effect
+  )
+```
+
+## Happiness Simulation 🕵️‍♀️
+
+```{r}
+data_observed |>
+  group_by(exposure) |>
+  summarise(avg_outcome = mean(observed_outcome))
+```
+
+::: box
+Why did that (approximately) work?
 :::
