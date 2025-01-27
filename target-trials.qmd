@@ -2,13 +2,12 @@
 title: "Target Trials"
 author: "Lucy D'Agostino McGowan"
 format: 
-  kakashi-revealjs:
+  revealjs:
     self-contained: true
-footer: "Slides by [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
 ---
 
 
-# Randomized trials {background-color="#23373B"}
+# Randomized trials {background-color="#533146"}
 
 ```{r}
 #| label: setup
@@ -36,7 +35,7 @@ options(
 - **Realistic Randomized Trials**
   - May violate exchangeability with non-adherence / dropout
   
-##
+---
 
 | Assumption            | Ideal Randomized Trial | Realistic Randomized Trial | Observational Study  |
 |-----------------|-----------------|---------------------|-------------------|
@@ -45,9 +44,9 @@ options(
 | Positivity            | `r emo::ji("smile")`   | `r emo::ji("smile")`       | `r emo::ji("shrug")` |
 | Exchangeability       | `r emo::ji("smile")`   | `r emo::ji("shrug")`       | `r emo::ji("shrug")` |
 
-# Study Protocol {background-color="#23373B"}
+# Study Protocol {background-color="#533146"}
 
-## {background-color="#23373B"}
+## {background-color="#533146"}
 
 ::: small
 1. Eligibility criteria
@@ -63,38 +62,22 @@ options(
 
 ::: small
 
-Assumption | Eligibility Criteria | Exposure Definition| Assignment Procedures | Follow-up Period | Outcome Definition | Causal contrast | Analysis Plan
-------------|----------------- | ------------------|---------|----------|----------|--------- | -------
-Consistency (Well defined exposure) | |`r emo::ji("heavy_check_mark")`|| | |
-Consistency (No interference) | | `r emo::ji("heavy_check_mark")`|`r emo::ji("heavy_check_mark")` | | `r emo::ji("heavy_check_mark")` | | `r emo::ji("heavy_check_mark")`
-Positivity |`r emo::ji("heavy_check_mark")`||`r emo::ji("heavy_check_mark")`|| | | `r emo::ji("heavy_check_mark")`
-Exchangeability |`r emo::ji("heavy_check_mark")`||`r emo::ji("heavy_check_mark")`|`r emo::ji("heavy_check_mark")`|| | `r emo::ji("heavy_check_mark")`
+
+| Assumption                          | Eligibility Criteria            | Exposure Definition             | Assignment Procedures           | Follow-up Period                | Outcome Definition              | Causal contrast                 | Analysis Plan                   |
+|---------|---------|---------|---------|---------|---------|---------|---------|
+| Consistency (Well-defined exposure) | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` |                                 |                                 |                                 | `r emo::ji("heavy_check_mark")` |
+| Consistency (No interference)       | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` |                                 | `r emo::ji("heavy_check_mark")` |                                 | `r emo::ji("heavy_check_mark")` |
+| Positivity                          | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` |                                 |                                 | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` |
+| Exchangeability                     | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` | `r emo::ji("heavy_check_mark")` |
+
 
 :::
 
 ## Mapped to diagraming causal claims
 
-```{r}
-#| echo: false
-#| fig-height: 2
-data <- data.frame(labels = c("exposure", "outcome", "eligibility criteria", "time zero", "target population", "follow-up time"),
-                   x = c(1.25, 1.75, 1.25, 1.55, 1.8, 2.15),
-                   y = c(1, 1, 0.8, 0.7, 0.8, 0.7),
-                   angle = c(0, 0, -50, 0, -50, 0))  
+![](https://www.r-causal.org/images/sentence-diagram-4.png)
 
-ggplot(data, aes(x = x, y = y)) +
-  geom_text(aes(label = labels, angle = angle, vjust = 0), 
-            size = 7) +
-  geom_segment(aes(x = 1, xend = 2, y = 0.95, yend = 0.95)) +  
-  geom_segment(aes(x = 1.5, xend = 1.5, y = 0.95, yend = 1.1)) +
-  geom_segment(aes(x = 1, xend = 1.35, y = 0.95, yend = 0.65)) +
-  geom_segment(aes(x = 1.35, xend = 1.65, y = 0.65, yend = 0.65)) +
-  geom_segment(aes(x = 1.55, xend = 1.9, y = 0.95, yend = 0.65)) +
-  geom_segment(aes(x = 1.9, xend = 2.15, y = 0.65, yend = 0.65)) +
-  theme_void()
-```
-
-# Target Trials {background-color="#23373B"}
+# Target Trials {background-color="#533146"}
 
 ## Target Trials
 
@@ -218,7 +201,7 @@ d_conf |>
 
 ::: nonincremental
 
-Find your starter repo on `sta-779-s23` that starts with `appex-02`
+Find your starter repo on `sta-779-s25` that starts with `appex-02`
 
 ::: small
 1. Run the `sim` code chunk to run the simulation
@@ -246,4 +229,4 @@ countdown::countdown(10)
 countdown::countdown(5)
 ```
 
-# {{< fa laptop >}} Demo {.center}
+# {{< fa laptop >}} Demo {.center background-color="#533146"}
