@@ -755,5 +755,23 @@ lm(
 
 ::::
 
+## {{< fa laptop >}} Application Exercise
+
+::: nonincremental
+
+Find your starter repo on `sta-779-s25` that starts with `appex-03`
+
+::: small
+1. Simulate a data set that has an exposure, outcome, and at least one confounder.
+2. Draw a DAG for the data generating mechanism for your simulation
+3. Complete an analysis on this data to estimate the causal effect
+:::
+
+:::
+
+```{r}
+#| echo: false
+countdown::countdown(10)
+```
 
 
