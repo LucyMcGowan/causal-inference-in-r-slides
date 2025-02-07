@@ -1,0 +1,759 @@
+---
+title: "From question to answer: stratification and outcome models"
+author: "Lucy D'Agostino McGowan"
+format: revealjs
+---
+
+
+#  Causal inference with `group_by()` and `summarize()` {background-color="#533146" .center}
+
+```{r}
+#| label: setup
+#| include: false
+source(here::here("setup.R"))
+library(tidyverse)
+library(ggdag)
+
+set.seed(1234)
+```
+
+
+## Example
+
+::: small
+* We are analyzing data from a software company 
+* Effect: Software update frequency (`weekly` or `daily`) on customer satisfaction
+* Free customers: more likely to receive weekly updates
+* Premium customers: more likely to receive daily updates
+* Premium customers: more likely to have higher satisfaction
+:::
+
+## Example DAG
+
+::: {.box .fragment}
+Are there any open backdoor paths?
+:::
+
+
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+
+coords1 <- list(
+  x = c(customer_type = 1, updates = 2, satisfaction = 3),
+  y = c(customer_type = 0, updates = 0, satisfaction = 0)
+)
+
+dag1 <- dagify(
+  satisfaction ~ customer_type,
+  updates ~ customer_type,
+  coords = coords1,
+  labels = c(
+    customer_type = "customer type",
+    updates = "frequency\nof updates",
+    satisfaction = "customer\nsatisfaction"
+  )
+)
+
+ggdag(dag1, use_text = FALSE, use_edges = FALSE) +
+  geom_dag_text(aes(label = label), nudge_y = c(-.05, -.05, -.05), color = "black") +
+  geom_dag_edges_arc(curvature = c(0.07, 0)) +
+  theme_dag() +
+  ylim(c(.2, -.2))
+```
+
+## Example Data
+
+```{r}
+#| code-fold: true
+set.seed(1)
+n <- 10000
+satisfaction1 <- tibble(
+  # Free (0) or Premium (1)
+  customer_type = rbinom(n, 1, 0.5),
+  p_exposure = case_when(
+    # Premium customers are more likely to receive daily updates
+    customer_type == 1 ~ 0.75,
+    # Free customers are more likely to receive weekly updates
+    customer_type == 0 ~ 0.25
+  ),
+  # Weekly (0) vs Daily (1)
+  update_frequency = rbinom(n, 1, p_exposure),
+  # generate the "true" average treatment effect of 0
+  # to do this, we are going to generate the
+  # potential outcomes, first if exposure = 0
+  # `y0` = `satisfaction(weekly)`
+  # notice `update_frequency` is not in the equation below
+  # we use rnorm(n) to add the random error term that is normally
+  # distributed with a mean of 0 and a standard deviation of 1
+  y0 = customer_type + rnorm(n),
+  # because the true effect is 0, the potential outcome
+  # if exposure = 1 is identical
+  y1 = y0,
+  # in practice, we will only see one of these
+  # observed
+  satisfaction = (1 - update_frequency) * y0 +
+    update_frequency * y1,
+  observed_potential_outcome = case_when(
+    update_frequency == 0 ~ "y0",
+    update_frequency == 1 ~ "y1"
+  )
+) |>
+  mutate(
+    update_frequency = factor(
+      update_frequency,
+      labels = c("weekly", "daily")
+    ),
+    customer_type = factor(
+      customer_type,
+      labels = c("free", "premium")
+    )
+  )
+satisfaction1 |>
+  select(update_frequency, customer_type, satisfaction)
+```
+
+## Example analysis
+
+::: {.box .fragment}
+What assumptions am I making with this analysis?
+:::
+
+```{r}
+satisfaction1 |>
+  group_by(update_frequency) |>
+  summarise(avg_satisfaction = mean(satisfaction))
+```
+
+::: {.columns layout-ncol=3}
+
+::: {column}
+* Exchangeability
+
+:::
+
+::: {column}
+* Consistency
+
+:::
+
+::: {column}
+* Positivity
+
+:::
+
+:::
+
+## Example analysis (stratified)
+
+::: box
+We know the exchangeability assumption is violated (I simulated it as such!)
+
+:::
+
+::: {.fragment}
+
+```{r}
+satisfaction_strat <- satisfaction1 |>
+  group_by(customer_type, update_frequency) |>
+  summarise(
+    avg_satisfaction = mean(satisfaction),
+    .groups = "drop"
+  )
+
+satisfaction_strat
+```
+
+:::
+
+## Example analysis (stratified)
+
+```{r}
+satisfaction_strat_est <- satisfaction_strat |>
+  pivot_wider(
+    names_from = update_frequency,
+    values_from = avg_satisfaction
+  ) |>
+  summarise(estimate = daily - weekly)
+
+satisfaction_strat_est
+```
+
+
+## Example analysis (stratified)
+
+```{r}
+satisfaction_strat_est |>
+  # note: we would need to weight this if the confounder
+  # groups were not equally sized
+  summarise(estimate = mean(estimate))
+```
+
+::: {.box .fragment}
+
+What is my estimated causal effect?
+
+:::
+
+## Example 2 
+
+* Now we have **two binary confounders**
+* Weekly updates have a higher chance of occurring within business hours
+* Daily updates have a higher chance of occurring after business hours
+* Customers who don’t overlap with business hours have lower satisfaction 
+
+## Example 2 DAG
+
+::: {.box .fragment}
+Are there any open backdoor paths?
+:::
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+dag2 <- dagify(
+  satisfaction ~ customer_service + customer_type,
+  customer_service ~ business_hours,
+  updates ~ customer_type + business_hours,
+  coords = time_ordered_coords(),
+  labels = c(
+    customer_type = "customer\ntype",
+    business_hours = "business\nhours",
+    updates = "frequency\nof updates",
+    customer_service = "customer\nservice",
+    satisfaction = "customer\nsatisfaction"
+  )
+)
+
+ggdag(dag2, use_text = FALSE) +
+  geom_dag_text(
+    aes(label = label),
+    nudge_y = c(-.35, -.35, .35, .35, .35),
+    color = "black"
+  ) +
+  theme_dag()
+```
+
+## Example 2 Data
+
+```{r}
+#| code-fold: true
+satisfaction2 <- tibble(
+  # Free (0) or Premium (1)
+  customer_type = rbinom(n, 1, 0.5),
+  # Business hours (Yes: 1, No: 0)
+  business_hours = rbinom(n, 1, 0.5),
+  p_exposure = case_when(
+    customer_type == 1 & business_hours == 1 ~ 0.75,
+    customer_type == 0 & business_hours == 1 ~ 0.9,
+    customer_type == 1 & business_hours == 0 ~ 0.2,
+    customer_type == 0 & business_hours == 0 ~ 0.1
+  ),
+  # Weekly (0) vs Daily (1)
+  update_frequency = rbinom(n, 1, p_exposure),
+  # More likely during business hours
+  customer_service_prob = business_hours * 0.9 +
+    (1 - business_hours) * 0.2,
+  customer_service = rbinom(n, 1, prob = customer_service_prob),
+  satisfaction = 70 + 10 * customer_type +
+    15 * customer_service + rnorm(n),
+) |>
+  mutate(
+    customer_type = factor(
+      customer_type,
+      labels = c("free", "premium")
+    ),
+    business_hours = factor(
+      business_hours,
+      labels = c("no", "yes")
+    ),
+    update_frequency = factor(
+      update_frequency,
+      labels = c("weekly", "daily")
+    ),
+    customer_service = factor(
+      customer_service,
+      labels = c("no", "yes")
+    )
+  )
+
+satisfaction2 |>
+  select(update_frequency, customer_type, business_hours, customer_service, satisfaction) |>
+  print(n = 5)
+```
+
+## Example 2 Analysis
+
+```{r}
+satisfaction2_strat <- satisfaction2 |>
+  group_by(customer_type, business_hours, update_frequency) |>
+  summarise(
+    avg_satisfaction = mean(satisfaction),
+    .groups = "drop"
+  )
+
+satisfaction2_strat |>
+  select(avg_satisfaction, everything())
+```
+
+::: {.box .fragment}
+
+What did I "adjust" for?
+
+:::
+
+## Example 2 Analysis
+
+```{r}
+satisfaction2_strat |>
+  pivot_wider(
+    names_from = update_frequency,
+    values_from = avg_satisfaction
+  ) |>
+  summarise(estimate = mean(daily - weekly))
+```
+
+::: {.box .fragment}
+What is my estimated causal effect?
+:::
+
+## Example 2 Analysis
+
+```{r}
+satisfaction2_strat <- satisfaction2 |>
+  group_by(customer_type, customer_service, update_frequency) |>
+  summarise(
+    avg_satisfaction = mean(satisfaction),
+    .groups = "drop"
+  )
+
+satisfaction2_strat |>
+  select(avg_satisfaction, everything())
+```
+
+::: {.box .fragment}
+
+What did I "adjust" for?
+
+:::
+
+## Example 2 Analysis
+
+```{r}
+satisfaction2_strat |>
+  pivot_wider(
+    names_from = update_frequency,
+    values_from = avg_satisfaction
+  ) |>
+  summarise(estimate = mean(daily - weekly))
+```
+
+::: {.box .fragment}
+What is my estimated causal effect?
+:::
+
+## Example 3
+
+* What if I have a **continuous confounder**
+* The number of users within the organization
+* Organizations with more users get more updates and have slightly lower satisfaction scores.
+
+## Example 3 DAG
+
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+
+coords3 <- list(
+  x = c(num_users = 1, updates = 2, satisfaction = 3),
+  y = c(num_users = 0, updates = 0, satisfaction = 0)
+)
+
+dag3 <- dagify(
+  satisfaction ~ num_users,
+  updates ~ num_users,
+  coords = coords3,
+  labels = c(
+    num_users = "number of\nusers",
+    updates = "frequency\nof updates",
+    satisfaction = "customer\nsatisfaction"
+  )
+)
+
+ggdag(dag3, use_text = FALSE, use_edges = FALSE) +
+  geom_dag_text(aes(label = label), nudge_y = c(-.05, -.05, -.05), color = "black") +
+  geom_dag_edges_arc(curvature = c(0.07, 0)) +
+  theme_dag() +
+  ylim(c(.2, -.2))
+```
+
+
+## Example 3 data
+
+```{r}
+#| code-fold: true
+
+satisfaction3 <- tibble(
+  # Number of users
+  num_users = runif(n, 1, 500),
+  # Larger customers more likely to have daily updates
+  update_frequency = rbinom(n, 1, plogis(num_users / 100)),
+  # with more users come less satisfaction
+  satisfaction = 70 + -0.2 * num_users
+) |>
+  mutate(
+    update_frequency = factor(
+      update_frequency,
+      labels = c("weekly", "daily")
+    )
+  )
+
+satisfaction3
+```
+
+## Example 3 analysis
+
+```{r}
+satisfaction3_strat <- satisfaction3 |>
+  mutate(num_users_q = ntile(num_users, 5)) |>
+  group_by(num_users_q, update_frequency) |>
+  summarise(
+    avg_satisfaction = mean(satisfaction),
+    .groups = "drop"
+  )
+
+satisfaction3_strat
+```
+
+## Example 3 analysis
+
+
+```{r}
+satisfaction3_strat |>
+  ungroup() |>
+  pivot_wider(
+    names_from = update_frequency,
+    values_from = avg_satisfaction
+  ) |>
+  summarise(estimate = mean(daily - weekly))
+```
+
+::: {.box .fragment}
+What is my estimated causal effect?
+:::
+
+
+## Example 3 analysis
+
+```{r}
+#| code-line-numbers: "|2"
+satisfaction3_strat <- satisfaction3 |>
+  mutate(num_users_q = ntile(num_users, 10)) |>
+  group_by(num_users_q, update_frequency) |>
+  summarise(
+    avg_satisfaction = mean(satisfaction),
+    .groups = "drop"
+  )
+```
+
+## Example 3 analysis
+
+
+```{r}
+satisfaction3_strat |>
+  ungroup() |>
+  pivot_wider(
+    names_from = update_frequency,
+    values_from = avg_satisfaction
+  ) |>
+  summarise(estimate = mean(daily - weekly))
+```
+
+## Example 3 analysis
+
+```{r}
+#| code-line-numbers: "2"
+satisfaction3_strat <- satisfaction3 |>
+  mutate(num_users_q = ntile(num_users, 30)) |>
+  group_by(num_users_q, update_frequency) |>
+  summarise(
+    avg_satisfaction = mean(satisfaction),
+    .groups = "drop"
+  )
+```
+
+## Example 3 analysis
+
+
+```{r}
+satisfaction3_strat |>
+  ungroup() |>
+  pivot_wider(
+    names_from = update_frequency,
+    values_from = avg_satisfaction
+  ) |>
+  summarise(estimate = mean(daily - weekly))
+```
+
+::: {.box .fragment}
+What is my estimated causal effect?
+:::
+
+## Example 3 analysis
+
+```{r}
+#| code-line-numbers: "2"
+satisfaction3_strat <- satisfaction3 |>
+  mutate(num_users_q = ntile(num_users, 100)) |>
+  group_by(num_users_q, update_frequency) |>
+  summarise(
+    avg_satisfaction = mean(satisfaction),
+    .groups = "drop"
+  )
+```
+
+## Example 3 analysis
+
+
+```{r}
+satisfaction3_strat |>
+  ungroup() |>
+  pivot_wider(
+    names_from = update_frequency,
+    values_from = avg_satisfaction
+  ) |>
+  summarise(estimate = mean(daily - weekly))
+```
+
+::: {.box .fragment}
+What is my estimated causal effect?
+:::
+
+## Stratification
+
+* The approach we’ve been using with `group_by()` and `summarize()` is often called **stratification** 
+* This is a non-parametric (ish) approach
+* Can be powerful for simple problems or when you have lots of data because you can sometimes avoid model misspecification problems
+* With many confounders (especially continuous ones), we quickly encounter the curse of dimensionality
+  * (i.e. too few observations by combinations of confounder levels)
+
+# Parametric outcome models {background-color="#533146" .center}
+
+## Conditional means
+
+* You can think of **stratification** as calculating conditional means
+  * We then marginalized over these by taking a (weighted) average of these averages to get the overall estimated average treatment effect 
+* A more general extension of conditional means is **multivariable linear regression**
+
+## Multivariable linear regression
+
+* Also called: 
+    * Direct adjustment
+    * Regression adjustment
+    
+## Example 2 analysis (regression)
+
+```{r}
+#| code-line-numbers: "|2,3,4,5"
+library(broom)
+lm(
+  satisfaction ~ update_frequency + customer_type + business_hours,
+  data = satisfaction2
+) |>
+  tidy(conf.int = TRUE) |>
+  filter(term == "update_frequencydaily") |>
+  select(estimate, starts_with("conf"))
+```
+
+## Example 3 analysis (regression)
+
+```{r}
+lm(
+  satisfaction ~ update_frequency + num_users,
+  data = satisfaction3
+) |>
+  tidy(conf.int = TRUE) |>
+  filter(term == "update_frequencydaily") |>
+  select(estimate, starts_with("conf"))
+```
+
+## Parametric Models
+
+* This generalization doesn’t come for free!
+* We’ve now introduced a **parametric statistical model** to make estimates across the regions of our data
+* Our estimate in the continuous case gives us exactly the right answer because the statistical model under `lm()` exactly matches our simulation
+
+## Example 4
+
+```{r}
+#| code-fold: true
+#| fig-align: center
+
+set.seed(1)
+satisfaction4 <- tibble(
+  # Number of users
+  num_users = runif(n, 1, 500),
+  # Larger customers more likely to have daily updates
+  update_frequency = rbinom(n, 1, plogis(num_users / 100)),
+  # with more users come less satisfaction
+  satisfaction = 70 - 0.0001 * (num_users-250)^2 - 0.0001 * (num_users - 250)^3
+) |>
+  mutate(
+    update_frequency = factor(
+      update_frequency,
+      labels = c("weekly", "daily")
+    )
+  )
+
+ggplot(satisfaction4, aes(x = num_users, y = satisfaction)) +
+  geom_point()
+```
+## Example 4 analysis (regression)
+
+```{r}
+lm(
+  satisfaction ~ update_frequency + num_users,
+  data = satisfaction4
+) |>
+  tidy(conf.int = TRUE) |>
+  filter(term == "update_frequencydaily") |>
+  select(estimate, starts_with("conf"))
+```
+
+## Example 4 analysis (stratified)
+
+```{r}
+satisfaction4_strat <- satisfaction4 |>
+  mutate(num_users_q = ntile(num_users, 40)) |>
+  group_by(num_users_q, update_frequency) |>
+  summarise(
+    avg_satisfaction = mean(satisfaction),
+    .groups = "drop"
+  )
+
+satisfaction4_strat |>
+  ungroup() |>
+  pivot_wider(
+    names_from = update_frequency,
+    values_from = avg_satisfaction
+  ) |>
+  summarise(estimate = mean(daily - weekly))
+```
+## Example 4 analysis (regression, polynomial)
+
+```{r}
+#| code-line-numbers: "|2"
+lm(
+  satisfaction ~ update_frequency + poly(num_users, 3),
+  data = satisfaction4
+) |>
+  tidy(conf.int = TRUE) |>
+  filter(term == "update_frequencydaily") |>
+  select(estimate, starts_with("conf"))
+```
+
+## Regression
+
+* Outcome regression can work very well when we meet the assumptions of the estimator we’re using for our model
+* OLS, for instance, can be very beneficial if we understand the relationships between the outcome and the variables in the regression
+
+## Regression
+
+* In this example, OLS did work when we had a linear confounder
+* It did not work when we had a nonlinear confounder but modelled it linearly
+* It did work when we had a nonlinear confounder and modelled it correctly
+
+## Conditional vs marginal effects
+
+* Outcome models give us **conditional effects**
+* "a one-unit change in the exposure results in a `coefficient` change in the outcome *holding all other variables in the model constant*" 
+* In causal inference, we are often interested in **marginal effects**
+
+## Marginal effects
+
+* We want to average the effect across the distribution of factors in a particular population for which we are trying to estimate a causal effect 
+
+## Marginal effects
+
+**The estimates will be identical when:**
+
+  * the outcome is continuous AND
+  * the effect is linear AND
+  * there are no interactions between the exposure effect and other factors about the population
+  
+## Marginal effects
+
+* What if ther is an interaction in the model?
+  * that is, what if the exposure has a different impact on the outcome depending on some other factor
+* Now we no longer have a single coefficient to interpret 
+* We may want to estimate a marginal effect, taking into account the distribution of that factor in the population of interest
+
+## Marginal effects
+
+* Why? We are ultimately trying to determine whether we should suggest exposure to the target population, so we want to know, on average, whether it will be beneficial
+
+## Example 5
+
+* Consider a variation of our first example where update frequency **does** have a causal effect, but that effect varies by customer type
+* For premium customers, daily updates **increase** satisfaction by 5 points
+* For free customers, daily updates **decrease** satisfaction by 5 points
+
+## Example 5
+
+:::: {.columns}
+
+::: column
+
+### 50% of the customers are premium and 50% are free
+
+::: {.fragment}
+
+`(.5 * 5) + (.5 * -5)=`
+
+::: large
+**0**
+:::
+
+:::
+
+:::
+
+
+::: column
+
+###  100% of the customers are premium
+
+::: {.fragment}
+
+`(1 * 5) + (0 * -5) =`
+
+::: large
+**5**
+:::
+
+:::
+
+:::
+
+::: column
+
+### 100% of the customers are free
+
+::: {.fragment}
+
+`(0 * 5) + (1 * -5) =`
+
+::: large
+**-5**
+:::
+
+:::
+
+:::
+
+::::
+
+
+
