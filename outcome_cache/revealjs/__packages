@@ -1,10 +1,3 @@
-base
-methods
-datasets
-utils
-grDevices
-graphics
-stats
 tidyverse
 ggplot2
 tibble
@@ -18,3 +11,6 @@ broom
 propensity
 causaldata
 rsample
+lubridate
+touringplans
+MatchIt

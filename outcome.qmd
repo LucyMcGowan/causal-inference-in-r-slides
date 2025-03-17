@@ -1,8 +1,7 @@
 ---
 title: "Outcome Models"
 author: "Lucy D'Agostino McGowan"
-format: kakashi-revealjs
-footer: "Slides by Dr. Malcom Barret & [Dr. Lucy D'Agostino McGowan](https://lucymcgowan.com)"
+format: revealjs
 ---
 
 ```{r}
@@ -20,7 +19,43 @@ nhefs_complete_uc <- nhefs_complete |>
   filter(censored == 0)
 ```
 
-## Outcome Model {.large}
+## Outcome Model (matching)
+
+```{r}
+library(broom)
+library(touringplans)
+library(MatchIt)
+
+m <- matchit(
+  qsmk ~ sex + 
+      race + age + I(age^2) + education + 
+      smokeintensity + I(smokeintensity^2) + 
+      smokeyrs + I(smokeyrs^2) + exercise + active + 
+      wt71 + I(wt71^2),
+  data = nhefs_complete_uc
+)
+matched_data <- get_matches(m, id = "i")
+```
+
+## Outcome Model (matching)
+
+```{r}
+lm(wt82_71 ~ qsmk, data = matched_data) |>
+  tidy(conf.int = TRUE)
+```
+
+## {{< fa laptop >}} Application Exercise {.small}
+
+`r countdown::countdown(minutes = 10)`
+
+::: {.nonincremental}
+1. Get starter files from `https://github.com/sta-779-s25/appex-04-YOUR-GITHUB-HANDLE.git`
+2. Fit the propensity score matching model according to our DAG
+3. Fit the outcome model to the matched data
+4. Estimate the causal effect
+:::
+
+## Outcome Model (weighted) {.large}
 
 ```{r}
 #| eval: false
@@ -44,7 +79,9 @@ lm(outcome ~ exposure, data = df, weights = wts) |>
 2. Sandwich estimator (on outcome model only)
 3. Sandwich estimator (on outcome model + propensity score model)
 
-## 1. Create a function to run your analysis once on a sample of your data
+## 1. Create a function to run your analysis once 
+
+(on a sample of your data)
 
 ::: {.small}
 
@@ -76,7 +113,7 @@ fit_ipw <- function(split, ...) {
 ```
 :::
 
-## 2. Use {rsample} to bootstrap our causal effect
+## 2. Use {rsample} to bootstrap our effect
 
 ```{r}
 #| code-line-numbers: "|4-8"
@@ -93,13 +130,13 @@ bootstrapped_nhefs <- bootstraps(
 bootstrapped_nhefs
 ```
 
-## 2. Use {rsample} to bootstrap our causal effect
+## 2. Use {rsample} to bootstrap our effect
 
 ```{r}
 fit_ipw(bootstrapped_nhefs$splits[[1]])
 ```
 
-## 2. Use {rsample} to bootstrap our causal effect
+## 2. Use {rsample} to bootstrap our effect
 
 ```{r}
 #| cache: true
@@ -111,7 +148,7 @@ ipw_results <- bootstrapped_nhefs |>
 ipw_results
 ```
 
-## 2. Use {rsample} to bootstrap our causal effect
+## 2. Use {rsample} to bootstrap our effect
 
 ```{r}
 #| echo: false
@@ -141,13 +178,17 @@ boot_estimate <- int_t(ipw_results, boot_fits) |>
   filter(term == "exposure")
 ```
 
-## *Your Turn*
+## {{< fa laptop >}} Application Exercise {.small .nonincremental}
 
 `r countdown::countdown(minutes = 12)`
 
-### Create a function called `ipw_fit` that fits the propensity score model and the weighted outcome model for the effect between `park_extra_magic_morning` and `wait_minutes_posted_avg`
+::: {.nonincremental}
 
-### Using the `bootstraps()` and `int_t()` functions to estimate the final effect.
+1. Create a function called `ipw_fit` that fits the propensity score model and the weighted outcome model for the effect between the exposure and outcome
+
+2.  Using the `bootstraps()` and `int_t()` functions to estimate the final effect.
+
+:::
 
 ## Sandwich estimator
 
@@ -189,7 +230,7 @@ lb
 ub
 ```
 
-## Sandwich Estimator with `{survey}` package
+## Sandwich estimator with `{survey}` 
 
 ```{r}
 library(survey)
@@ -201,18 +242,45 @@ des <- svydesign(
 )
 ```
 
-## Sandwich Estimator with `{survey}` package
+## Sandwich estimator with `{survey}` 
 
 ```{r}
 svyglm(wt82_71 ~ qsmk, des) |>
   tidy(conf.int = TRUE)
 ```
 
-## *Your Turn*
+## {{< fa laptop >}} Application Exercise {.small}
 
 `r countdown::countdown(minutes = 10)`
 
-### Use the `sandwich` package to calcualte the uncertainty for your weighted model
+::: {.nonincremental}
 
-### Repeat this using the `survey` package
+1. Use the `sandwich` package to calcualte the uncertainty for your weighted model
 
+2. Repeat this using the `survey` package
+
+:::
+
+## Sandwich Estimator with `{propensity}`
+
+This takes into account that you fit the propensity score model.
+
+```{r}
+results <- ipw(propensity_model, weighted_mod)
+results
+```
+
+## Sandwich Estimator with `{propensity}`
+
+This takes into account that you fit the propensity score model.
+
+```{r}
+results |> 
+  as.data.frame()
+```
+
+## {{< fa laptop >}} Application Exercise
+
+`r countdown::countdown(minutes = 10)`
+
+1. Use the `{propensity}` package to calcualte the uncertainty for your weighted model
